@@ -12,6 +12,10 @@ Eventually I will add support for mainestreet but since
 I have graduated I don't really have access to course
 searching anymore so whatever I will see what I can do once classes open up in the fall/spring.
 
+Will probably have to email RMP to get their permission 
+
+https://www.ratemyprofessors.com/utility/contact#support
+
 */
 
 
@@ -55,12 +59,8 @@ for(var i =0; i < listOfNames.length; i++){
 
     }else{
         nameTag.insertAdjacentHTML('afterend', '<p class="rmp-no-rating"><b>Rating:</b> No Rating Found</p>');
-
     }
-    
 }
-
-
 }
 
 
