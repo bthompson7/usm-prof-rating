@@ -1,0 +1,25 @@
+{
+    "name": "USM Professor Ratings",
+    "short_name": "USM-RMP",
+    "description": "Shows rate my professor ratings directly on the USM class search page for easy access",
+    "version": "1.0.0",
+  
+    "content_scripts": 
+      [
+          {
+              "matches":["https://usm.maine.edu/courses*"],
+              "css":["src/extension.css"],
+              "js":["arrive.min.js", "src/extension.js"],
+              "run_at": "document_end"
+          }
+      ],
+    "permissions": [
+      "storage"
+    ],
+    "icons": {
+      "16":"icons/icon16.png",
+      "48":"icons/icon48.png",
+      "128":"icons/icon128.png" 
+    },
+    "manifest_version": 2
+  }
