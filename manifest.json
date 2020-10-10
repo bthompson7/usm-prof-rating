@@ -7,7 +7,7 @@
     "content_scripts": 
       [
           {
-              "matches":["https://usm.maine.edu/courses*"],
+              "matches":["https://usm.maine.edu/courses*","https://mainestreetcs.maine.edu/psp/CSPRD/EMPLOYEE/SA/c/SA_LEARNER_SERVICES_2.SSR_SSENRL_CART.GBL?Action=A&ACAD_CAREER=*&EMPLID=*&INSTITUTION=*&STRM=*"],
               "css":["src/extension.css"],
               "js":["arrive.min.js", "src/extension.js"],
               "run_at": "document_end"

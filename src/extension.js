@@ -6,15 +6,21 @@ Description:
 
 This script/extension is activated on https://usm.maine.edu/courses*. 
 It looks up the RateMyProfessor rating for each professor on the page and then displays it on the page
-so that people dont' have to keep switching tabs.
+so that people don't have to keep switching tabs.
 
-Eventually I will add support for mainestreet but since
-I have graduated I don't really have access to course
-searching anymore so whatever I will see what I can do once classes open up in the fall/spring.
 
-Will probably have to email RMP to get their permission 
-
+TODO:
+Short Term:
+-Will probably have to email RMP to get their permission since scraping their website is against their TOS. 
 https://www.ratemyprofessors.com/utility/contact#support
+-Bug fixes for weird edge cases or anything else
+-
+-
+
+Long Term:
+-Add support for Mainestreet class searching
+-
+-
 
 */
 
@@ -22,8 +28,62 @@ https://www.ratemyprofessors.com/utility/contact#support
 var proxyURL = "https://cors-anywhere.herokuapp.com/"
 var baseURL = "https://www.ratemyprofessors.com"
 
-getProfNamesFromPage();
 
+
+
+
+console.log("EXTENSION WORKING...");
+var win = window.location.href;
+console.log(win.indexOf("https://mainestreetcs.maine.edu/psp") > -1)
+if(win.indexOf("https://mainestreetcs.maine.edu/psp") > -1){
+    getProfNamesFromMainestreet();
+}else{
+    getProfNamesFromPage();
+}
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+/*
+
+This function gets a list of professors from https://mainestreetcs.maine.edu/*
+
+https://mainestreetcs.maine.edu/psp/CSPRD/EMPLOYEE/SA/c/SA_LEARNER_SERVICES_2.SSR_SSENRL_CART.GBL?Action=A&ACAD_CAREER=*&EMPLID=*&INSTITUTION=*&STRM=*
+
+*/
+
+async function getProfNamesFromMainestreet(){
+    console.log("Going into getProfNamesFromMainestreet function...");
+    //tag with prof name is <span class="PSLONGEDITBOX" id="MTG_INSTR$2">Rebecca Goodale</span>
+
+    while(true){
+        if(document.querySelector("#MTG_INSTR\\$0")){
+            break;
+        }
+        console.log("Sleeping...")
+
+        await sleep(1000)
+    }
+
+    console.log("found correct element!");
+    var index = 0;
+    let listOfNames = [];
+    while(document.querySelector("#MTG_INSTR\\$" + index)){
+        var name = document.querySelectorAll("#MTG_INSTR\\$" + index)
+        console.log(name);
+        listOfNames.push(name);
+    }
+
+    console.log("Found the element " + listOfNames.length);
+    for(var i =0; i < listOfNames.length; i++){
+        var name = document.querySelectorAll('[id*="MTG_INSTR"]')[0].getElementsByClassName('PSLONGEDITBOX')[i].innerText;
+        console.log(name);
+    }
+
+
+
+}
 
 /*
 
@@ -58,7 +118,7 @@ for(var i =0; i < listOfNames.length; i++){
         nameTag.insertAdjacentHTML('afterend', '<p class="rmp-rating">' + rating + '</p>');
 
     }else{
-        nameTag.insertAdjacentHTML('afterend', '<p class="rmp-no-rating"><b>Rating:</b> No Rating Found</p>');
+        nameTag.insertAdjacentHTML('afterend', '<p class="rmp-no-rating"><b>RMP Rating:</b> No Rating Found</p>');
     }
 }
 }
@@ -100,8 +160,10 @@ Http.onreadystatechange = (e) => {
     Http2.onreadystatechange = (e2) => {
         doc = parser.parseFromString(Http2.response, "text/html");
         var rating = doc.getElementsByClassName("RatingValue__Numerator-qw8sqy-2 gxuTRq");
-        var wouldTakeAgain = doc.getElementsByClassName("FeedbackItem__FeedbackNumber-uof32n-1 bGrrmf");
-        displayRating = "<b>RMP Rating: </b>" + rating[0].innerHTML + "/5\n" + wouldTakeAgain[0].innerHTML + " would take a class with them again";
+        var numOfRatings = doc.querySelector("#root > div > div > div.PageWrapper__StyledPageWrapper-sc-3p8f0h-0.fOncgC > div.TeacherRatingsPage__TeacherBlock-a57owa-1.gmNsKR > div.TeacherInfo__StyledTeacher-ti1fio-1.fIlNyU > div:nth-child(1) > div.RatingValue__NumRatings-qw8sqy-0.jvzMox > div > a")
+        console.log(numOfRatings.innerHTML);
+        //var wouldTakeAgain = doc.getElementsByClassName("FeedbackItem__FeedbackNumber-uof32n-1 bGrrmf");
+        displayRating = "<b>RMP Rating: </b>" + rating[0].innerHTML + "/5\n based on " + numOfRatings.innerHTML;
         console.log(displayRating);
 
   }
