@@ -19,7 +19,7 @@ https://www.ratemyprofessors.com/utility/contact#support
 
 Long Term:
 -Add support for Mainestreet class searching
--
+-Add Support for prof. pages like https://usm.maine.edu/eng/mike-bendzela
 -
 
 */
@@ -95,12 +95,14 @@ reading the html on the current page
 function getProfNamesFromPage(){
 var listOfNames = document.getElementsByClassName("instructor-link section-item");
 for(var i =0; i < listOfNames.length; i++){
-    var name = listOfNames[i].getElementsByTagName('a')[0].innerHTML;
-    var nameTag = listOfNames[i].getElementsByTagName('a')[0];
-    var rating = "";
-    var res = name.split(" ");
+    try{
+        var name = listOfNames[i].getElementsByTagName('a')[0].innerHTML;
+        var nameTag = listOfNames[i].getElementsByTagName('a')[0];
+        var rating = "";
+        var res = name.split(" ");
+        console.log(res);
 
-    //use rating from localStorage if possible to reduce api calls
+           //use rating from localStorage if possible to reduce api calls
     if(res.length == 2 && !localStorage[res[0] + " " + res[1]]){
         rating = getProfRating(res[0],res[1]);
         localStorage.setItem(res[0] + " " + res[1], rating);
@@ -120,6 +122,12 @@ for(var i =0; i < listOfNames.length; i++){
     }else{
         nameTag.insertAdjacentHTML('afterend', '<p class="rmp-no-rating"><b>RMP Rating:</b> No Rating Found</p>');
     }
+    }catch(err){
+        console.error("No professor exists for this class");
+    }
+
+
+ 
 }
 }
 
@@ -146,9 +154,7 @@ Http.onreadystatechange = (e) => {
     doc = parser.parseFromString(Http.response, "text/html");
   
     var ratingDivElement = doc.getElementsByClassName("listing PROFESSOR");
-  
     var ratingLinkElement = ratingDivElement[0].getElementsByTagName('a');
-  
     profLink = proxyURL + baseURL + ratingLinkElement[0].getAttribute("href");
 
     const Http2 = new XMLHttpRequest();
@@ -168,14 +174,16 @@ Http.onreadystatechange = (e) => {
 
   }
   Http2.onerror = (e) =>{
-    console.error("Unable to fetch data from RateMyProfessor")
+    console.error("Unable to fetch data from RateMyProfessor");
+    alert("Unable to fetch data from RateMyProfessor");
   }
    Http2.send(null);
 
   }
 
 Http.onerror = (e) =>{
-    console.error("Unable to fetch data from RateMyProfessor")
+    console.error("Unable to fetch data from RateMyProfessor");
+    alert("Unable to fetch data from RateMyProfessor");
 }
 Http.send(null);
 
