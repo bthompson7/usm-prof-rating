@@ -8,8 +8,8 @@
       [
           {
               "matches":["https://usm.maine.edu/courses*","https://online.umaine.edu/course-search*"],
-              "css":["src/extension.css"],
-              "js":["src/getData.js","src/extension.js"],
+              "css":["src/css/extension.css"],
+              "js":["src/js/getData.js","src/js/extension.js"],
               "run_at": "document_end"
           }
       ],
