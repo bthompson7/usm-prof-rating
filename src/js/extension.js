@@ -15,7 +15,8 @@ Short Term:
 -Will probably have to email RMP to get their permission since scraping their website is against their TOS. 
 https://www.ratemyprofessors.com/utility/contact#support
 -Bug fixes for weird edge cases or anything else
--Change extension icons
+-Add Would Take Again and Level of difficulty 
+-Setup my own cors proxy using Heroku
 
 Long Term:
 -Add support for Mainestreet class searching
@@ -54,25 +55,23 @@ for(var i =0; i < listOfNames.length; i++){
         var nameTag = listOfNames[i].getElementsByTagName('a')[0];
         var rating = "";
         var res = name.split(" ");
-        console.log(res);
 
     //use rating from localStorage if possible to reduce the number of calls to RMP
     if(res.length == 2 && !localStorage[res[0] + " " + res[1]]){
-        rating = getProfRating(res[0],res[1],collegeName);
-        localStorage.setItem(res[0] + " " + res[1], rating);
+        getProfRating(res[0],res[1],collegeName,nameTag);
     }else if(res.length == 2 && localStorage[res[0] + " " + res[1]]){
-        rating = localStorage[res[0] + " " + res[1]];
-    }else if(res.length == 3 && !localStorage[res[0] + " " + res[2]]){
-        rating = getProfRating(res[0],res[2],collegeName);
-        localStorage.setItem(res[0] + " " + res[2], rating);
-    }else if(res.length == 3 && localStorage[res[0] + " " + res[2]]){
-        rating = localStorage[res[0] + " " + res[2]];
-    }
 
-    if(rating !== ""){
+        //use localStorage
+        rating = localStorage[res[0] + " " + res[1]];
         nameTag.insertAdjacentHTML('afterend', '<div class="rmp-rating">' + rating +  '</div>');
-    }else{
-        nameTag.insertAdjacentHTML('afterend', '<div class="rmp-no-rating"><b>RMP Rating:</b> No Rating Found</div>');
+    }else if(res.length == 3 && !localStorage[res[0] + " " + res[2]]){
+        getProfRating(res[0],res[2],collegeName,nameTag);
+    }else if(res.length == 3 && localStorage[res[0] + " " + res[2]]){
+
+        //use localStorage
+        rating = localStorage[res[0] + " " + res[2]];
+        nameTag.insertAdjacentHTML('afterend', '<div class="rmp-rating">' + rating +  '</div>');
+
     }
 
     }catch(err){
@@ -96,26 +95,25 @@ for(var i =0; i < listOfNames.length; i++){
         var nameTag = listOfNames[i].getElementsByTagName('a')[0];
         var rating = "";
         var res = name.split(" ");
-        console.log(res);
 
     //use rating from localStorage if possible to reduce the number of calls to RMP
     if(res.length == 2 && !localStorage[res[0] + " " + res[1]]){
-        rating = getProfRating(res[0],res[1],collegeName);
-        localStorage.setItem(res[0] + " " + res[1], rating);
+        getProfRating(res[0],res[1],collegeName,nameTag);
+
+       //use localStorage
     }else if(res.length == 2 && localStorage[res[0] + " " + res[1]]){
         rating = localStorage[res[0] + " " + res[1]];
+        nameTag.insertAdjacentHTML('afterend', '<p class="rmp-rating">' + rating + '</p>');
     }else if(res.length == 3 && !localStorage[res[0] + " " + res[2]]){
-        rating = getProfRating(res[0],res[2],collegeName);
-        localStorage.setItem(res[0] + " " + res[2], rating);
+        getProfRating(res[0],res[2],collegeName,nameTag);
+        
+        //use localStorage
     }else if(res.length == 3 && localStorage[res[0] + " " + res[2]]){
         rating = localStorage[res[0] + " " + res[2]];
+        nameTag.insertAdjacentHTML('afterend', '<p class="rmp-rating">' + rating + '</p>');
+
     }
 
-    if(rating !== ""){
-        nameTag.insertAdjacentHTML('afterend', '<p class="rmp-rating">' + rating + '</p>');
-    }else{
-        nameTag.insertAdjacentHTML('afterend', '<p class="rmp-no-rating"><b>RMP Rating:</b> No Rating Found</p>');
-    }
     }catch(err){
         console.error("No professor exists for this class");
     }
