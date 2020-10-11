@@ -15,7 +15,7 @@ Short Term:
 -Will probably have to email RMP to get their permission since scraping their website is against their TOS. 
 https://www.ratemyprofessors.com/utility/contact#support
 -Bug fixes for weird edge cases or anything else
--
+-Change extension icons
 
 Long Term:
 -Add support for Mainestreet class searching
@@ -29,7 +29,7 @@ var proxyURL = "https://cors-anywhere.herokuapp.com/"
 var baseURL = "https://www.ratemyprofessors.com"
 var win = window.location.href;
 
-if(win.indexOf("https://online.umaine.edu/course-search") > -1){
+if(win.indexOf("https://online.umaine.edu") > -1){
     getProfNamesFromUMaine();
 }else{
     getProfNamesFromUSM();
@@ -45,7 +45,7 @@ Gets a list of professor names from https://online.umaine.edu/course-search
 
 function getProfNamesFromUMaine(){
 
-    console.log("Running on UMaine Course Search")
+    console.log("UMaine Course Search")
     var listOfNames = document.getElementsByClassName("classAttributeLeftHalf instructorList");
 for(var i =0; i < listOfNames.length; i++){
     try{
@@ -70,7 +70,7 @@ for(var i =0; i < listOfNames.length; i++){
     }
 
     if(rating !== ""){
-        nameTag.insertAdjacentHTML('afterend', '<div class="rmp-rating">' + rating + '</div>');
+        nameTag.insertAdjacentHTML('afterend', '<div class="rmp-rating">' + rating +  '</div>');
     }else{
         nameTag.insertAdjacentHTML('afterend', '<div class="rmp-no-rating"><b>RMP Rating:</b> No Rating Found</div>');
     }
@@ -87,7 +87,7 @@ Gets a list of professor names from https://usm.maine.edu/courses
 */
 
 function getProfNamesFromUSM(){
-    console.log("Running on USM Course Search")
+    console.log("USM Course Search")
 var listOfNames = document.getElementsByClassName("instructor-link section-item");
 for(var i =0; i < listOfNames.length; i++){
     try{
