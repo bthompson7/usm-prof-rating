@@ -12,11 +12,10 @@ so that people don't have to keep switching tabs.
 Extension TODOs:
 
 Short Term:
--Will probably have to email RMP to get their permission since scraping their website is against their TOS. 
-https://www.ratemyprofessors.com/utility/contact#support
 -Bug fixes for weird edge cases or anything else
--Add Would Take Again and Level of difficulty 
--Setup my own cors proxy using Heroku
+
+var myurl = "https://search-production.ratemyprofessors.com/solr/rmp/select/?solrformat=true&rows=2&wt=json&q=";
+https://search-production.ratemyprofessors.com/solr/rmp/select/?solrformat=true&rows=2&wt=json&q=David+Briggs+University+of+Southern+Maine
 
 Long Term:
 -Add support for Mainestreet class searching
@@ -26,12 +25,12 @@ Long Term:
 */
 
 
-var proxyURL = "https://cors-anywhere.herokuapp.com/"
 var baseURL = "https://www.ratemyprofessors.com"
 var win = window.location.href;
 
 if(win.indexOf("https://online.umaine.edu") > -1){
     getProfNamesFromUMaine();
+
 }else{
     getProfNamesFromUSM();
 }
@@ -60,15 +59,11 @@ for(var i =0; i < listOfNames.length; i++){
     if(res.length == 2 && !localStorage[res[0] + " " + res[1]]){
         getProfRating(res[0],res[1],collegeName,nameTag);
     }else if(res.length == 2 && localStorage[res[0] + " " + res[1]]){
-
-        //use localStorage
         rating = localStorage[res[0] + " " + res[1]];
         nameTag.insertAdjacentHTML('afterend', '<div class="rmp-rating">' + rating +  '</div>');
     }else if(res.length == 3 && !localStorage[res[0] + " " + res[2]]){
         getProfRating(res[0],res[2],collegeName,nameTag);
     }else if(res.length == 3 && localStorage[res[0] + " " + res[2]]){
-
-        //use localStorage
         rating = localStorage[res[0] + " " + res[2]];
         nameTag.insertAdjacentHTML('afterend', '<div class="rmp-rating">' + rating +  '</div>');
 
@@ -99,16 +94,12 @@ for(var i =0; i < listOfNames.length; i++){
     //use rating from localStorage if possible to reduce the number of calls to RMP
     if(res.length == 2 && !localStorage[res[0] + " " + res[1]]){
         getProfRating(res[0],res[1],collegeName,nameTag);
-
-       //use localStorage
     }else if(res.length == 2 && localStorage[res[0] + " " + res[1]]){
         rating = localStorage[res[0] + " " + res[1]];
         nameTag.insertAdjacentHTML('afterend', '<p class="rmp-rating">' + rating + '</p>');
     }else if(res.length == 3 && !localStorage[res[0] + " " + res[2]]){
         getProfRating(res[0],res[2],collegeName,nameTag);
-        
-        //use localStorage
-    }else if(res.length == 3 && localStorage[res[0] + " " + res[2]]){
+            }else if(res.length == 3 && localStorage[res[0] + " " + res[2]]){
         rating = localStorage[res[0] + " " + res[2]];
         nameTag.insertAdjacentHTML('afterend', '<p class="rmp-rating">' + rating + '</p>');
 
