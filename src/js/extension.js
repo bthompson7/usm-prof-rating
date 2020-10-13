@@ -25,12 +25,11 @@ Long Term:
 */
 
 
-var baseURL = "https://www.ratemyprofessors.com"
 var win = window.location.href;
+
 
 if(win.indexOf("https://online.umaine.edu") > -1){
     getProfNamesFromUMaine();
-
 }else{
     getProfNamesFromUSM();
 }
@@ -44,7 +43,6 @@ Gets a list of professor names from https://online.umaine.edu/course-search
 */
 
 function getProfNamesFromUMaine(){
-
     console.log("UMaine Course Search")
     var listOfNames = document.getElementsByClassName("classAttributeLeftHalf instructorList");
 for(var i =0; i < listOfNames.length; i++){
@@ -54,7 +52,6 @@ for(var i =0; i < listOfNames.length; i++){
         var nameTag = listOfNames[i].getElementsByTagName('a')[0];
         var rating = "";
         var res = name.split(" ");
-
     //use rating from localStorage if possible to reduce the number of calls to RMP
     if(res.length == 2 && !localStorage[res[0] + " " + res[1]]){
         getProfRating(res[0],res[1],collegeName,nameTag);
@@ -82,7 +79,9 @@ Gets a list of professor names from https://usm.maine.edu/courses
 
 function getProfNamesFromUSM(){
     console.log("USM Course Search")
+
 var listOfNames = document.getElementsByClassName("instructor-link section-item");
+
 for(var i =0; i < listOfNames.length; i++){
     try{
         var collegeName = "University+of+Southern+Maine"

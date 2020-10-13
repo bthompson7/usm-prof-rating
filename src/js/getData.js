@@ -3,7 +3,7 @@
 Handles getting all the data from RateMyProfessor
 
 */
-var proxyURL = "https://cors-anywhere.herokuapp.com/"
+var proxyURL = "https://intense-fjord-93634.herokuapp.com/"
 var baseURL = "https://search-production.ratemyprofessors.com/solr/rmp/select/?solrformat=true&rows=2&wt=json&q=";
 
 
@@ -31,6 +31,31 @@ Http.onreadystatechange = (e) => {
 Http.send();
 
 }
+
+/*
+
+To test to make sure the proxy url only allows requests from whitelisted domains on heroku
+
+*/
+function getProfRatingTest(firstName,lastName,university){
+  var fullURL = proxyURL + "https://search-production.ratemyprofessors.com/solr/rmp/select/?solrformat=true&rows=2&wt=json&q="+firstName + "+" +lastName + "+" + university;
+  
+  //GET request #1
+  const Http = new XMLHttpRequest();
+  var profLink = "";
+  var displayRating = "";
+  
+  Http.open("GET", fullURL, true);
+  Http.onreadystatechange = (e) => {
+       if(Http.status == 200 && Http.readyState == 4){
+        console.log(Http.response);
+        var displayRating = parseJSON(Http.response);
+        console.log(displayRating);
+       }
+      }
+  Http.send();
+  
+  }
 
 function parseJSON(json){
 
