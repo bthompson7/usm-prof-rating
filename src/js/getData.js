@@ -48,9 +48,8 @@ function getProfRatingTest(firstName,lastName,university){
   Http.open("GET", fullURL, true);
   Http.onreadystatechange = (e) => {
        if(Http.status == 200 && Http.readyState == 4){
-        console.log(Http.response);
+        //console.log(Http.response);
         var displayRating = parseJSON(Http.response);
-        console.log(displayRating);
        }
       }
   Http.send();
@@ -59,10 +58,15 @@ function getProfRatingTest(firstName,lastName,university){
 
 function parseJSON(json){
 
-  var data = JSON.parse(json);
-  var aveRating = data['response']['docs'][0]['averageratingscore_rf'];
-  var totalRatings = data['response']['docs'][0]['total_number_of_ratings_i'];
-  var isProfHard = data['response']['docs'][0]['averageeasyscore_rf'];
- return "<b>Overall Rating: </b>" + aveRating + "/5 based on " + totalRatings + " ratings. <br><b>Difficulty: </b>" + isProfHard + "/5";
+  try{
+    var data = JSON.parse(json);
+    var aveRating = data['response']['docs'][0]['averageratingscore_rf'];
+    var totalRatings = data['response']['docs'][0]['total_number_of_ratings_i'];
+    var isProfHard = data['response']['docs'][0]['averageeasyscore_rf'];
+   return "<b>Overall Rating: </b>" + aveRating + "/5 based on " + totalRatings + " ratings. <br><b>Difficulty: </b>" + isProfHard + "/5";
+  }catch(err){
+    return "<b>Overall Rating: </b>No ratings were found <br><b>Difficulty:</b> No ratings were found ";
+  }
+  
 }
 

@@ -1,7 +1,7 @@
 {
     "name": "UMaine System Professor Ratings",
     "short_name": "UMAINE-RMP",
-    "description": "A Chrome Extension that shows rate my professor ratings directly on the USM and UMaine class search page for easy access",
+    "description": "A Chrome extension that displays the professors rating from RateMyProfessor.com on the USM and UMaine course search page for easy access.",
     "version": "1.0.0",
   
     "content_scripts": 
