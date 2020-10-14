@@ -1,8 +1,8 @@
 # UMaine System Professor Ratings
 
-A Chrome extension that displays the professors rating from RateMyProfessor.com on the USM and UMaine course search page. 
+A Chrome extension that displays the professors rating from RateMyProfessor.com on the [USM](https://usm.maine.edu/courses) and [UMaine](https://online.umaine.edu/how-to-search-for-courses/) course search page. 
 
-#### University of Southern Maine 
+#### University of Southern Maine
 ![usm-extension](https://user-images.githubusercontent.com/35780502/95940748-253a1980-0dad-11eb-8952-3e83c3f621e2.png)
 
 #### University of Maine
