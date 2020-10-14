@@ -14,9 +14,6 @@ Extension TODOs:
 Short Term:
 -Bug fixes for weird edge cases or anything else
 
-var myurl = "https://search-production.ratemyprofessors.com/solr/rmp/select/?solrformat=true&rows=2&wt=json&q=";
-https://search-production.ratemyprofessors.com/solr/rmp/select/?solrformat=true&rows=2&wt=json&q=David+Briggs+University+of+Southern+Maine
-
 Long Term:
 -Add support for Mainestreet class searching
 -Add Support for prof. pages like https://usm.maine.edu/eng/mike-bendzela - WIP
@@ -26,8 +23,6 @@ Long Term:
 
 
 var win = window.location.href;
-
-
 if(win.indexOf("https://online.umaine.edu") > -1){
     getProfNamesFromUMaine();
 }else{
@@ -50,6 +45,7 @@ for(var i =0; i < listOfNames.length; i++){
         var nameTag = listOfNames[i].getElementsByTagName('a')[0];
         var splitName = professorName.split(" ");
 
+        console.log(splitName);
     //use rating from localStorage if possible to reduce the number of calls to CORS Proxy/RMP
     getAndDisplayData(splitName,nameTag,collegeName);
 
@@ -98,6 +94,10 @@ for(var i =0; i < listOfNames.length; i++){
 
 function getSingleUSMProfName(profName,collegeName){
      var splitName = profName.innerHTML.split(" ");
+     console.log(splitName);
+
+      splitName = removeTitlesFromName(splitName);
+      
       //use rating from localStorage if possible to reduce the number of calls to CORS Proxy/RMP
       var insertAfter = document.querySelector("#content-area > div > div > article > div.profile-name-title-container > div");
       getAndDisplayData(splitName,insertAfter,collegeName);

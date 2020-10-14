@@ -12,8 +12,6 @@ var fullURL = proxyURL + "https://search-production.ratemyprofessors.com/solr/rm
 
 //GET request #1
 const Http = new XMLHttpRequest();
-var profLink = "";
-var displayRating = "";
 
 Http.open("GET", fullURL, true);
 Http.onreadystatechange = (e) => {
@@ -48,7 +46,6 @@ function getProfRatingTest(firstName,lastName,university){
   Http.open("GET", fullURL, true);
   Http.onreadystatechange = (e) => {
        if(Http.status == 200 && Http.readyState == 4){
-        //console.log(Http.response);
         var displayRating = parseJSON(Http.response);
        }
       }
