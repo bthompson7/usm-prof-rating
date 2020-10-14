@@ -19,7 +19,7 @@ https://search-production.ratemyprofessors.com/solr/rmp/select/?solrformat=true&
 
 Long Term:
 -Add support for Mainestreet class searching
--Add Support for prof. pages like https://usm.maine.edu/eng/mike-bendzela
+-Add Support for prof. pages like https://usm.maine.edu/eng/mike-bendzela - WIP
 -
 
 */
@@ -34,37 +34,24 @@ if(win.indexOf("https://online.umaine.edu") > -1){
     getProfNamesFromUSM();
 }
 
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
-
 /*
 Gets a list of professor names from https://online.umaine.edu/course-search 
 */
 
 function getProfNamesFromUMaine(){
+    var collegeName = "Maine";
+
     console.log("UMaine Course Search")
+
     var listOfNames = document.getElementsByClassName("classAttributeLeftHalf instructorList");
 for(var i =0; i < listOfNames.length; i++){
     try{
-        var collegeName = "Maine";
-        var name = listOfNames[i].getElementsByTagName('a')[0].innerHTML;
+        var professorName = listOfNames[i].getElementsByTagName('a')[0].innerHTML;
         var nameTag = listOfNames[i].getElementsByTagName('a')[0];
-        var rating = "";
-        var res = name.split(" ");
-    //use rating from localStorage if possible to reduce the number of calls to RMP
-    if(res.length == 2 && !localStorage[res[0] + " " + res[1]]){
-        getProfRating(res[0],res[1],collegeName,nameTag);
-    }else if(res.length == 2 && localStorage[res[0] + " " + res[1]]){
-        rating = localStorage[res[0] + " " + res[1]];
-        nameTag.insertAdjacentHTML('afterend', '<div class="rmp-rating">' + rating +  '</div>');
-    }else if(res.length == 3 && !localStorage[res[0] + " " + res[2]]){
-        getProfRating(res[0],res[2],collegeName,nameTag);
-    }else if(res.length == 3 && localStorage[res[0] + " " + res[2]]){
-        rating = localStorage[res[0] + " " + res[2]];
-        nameTag.insertAdjacentHTML('afterend', '<div class="rmp-rating">' + rating +  '</div>');
+        var splitName = professorName.split(" ");
 
-    }
+    //use rating from localStorage if possible to reduce the number of calls to CORS Proxy/RMP
+    getAndDisplayData(splitName,nameTag,collegeName);
 
     }catch(err){
         console.error(err + "No professor exists for this class");
@@ -80,32 +67,58 @@ Gets a list of professor names from https://usm.maine.edu/courses
 function getProfNamesFromUSM(){
     console.log("USM Course Search")
 
+    //<h2 class="pane-title">Mike Bendzela</h2>
 var listOfNames = document.getElementsByClassName("instructor-link section-item");
+var collegeName = "University+of+Southern+Maine"
+var profName = document.querySelector("#content-area > div > div > article > div.profile-name-title-container > h2");
 
+if(listOfNames.length > 0){
 for(var i =0; i < listOfNames.length; i++){
     try{
-        var collegeName = "University+of+Southern+Maine"
-        var name = listOfNames[i].getElementsByTagName('a')[0].innerHTML;
+        var professorName = listOfNames[i].getElementsByTagName('a')[0].innerHTML;
         var nameTag = listOfNames[i].getElementsByTagName('a')[0];
-        var rating = "";
-        var res = name.split(" ");
+        var splitName = professorName.split(" ");
 
-    //use rating from localStorage if possible to reduce the number of calls to RMP
-    if(res.length == 2 && !localStorage[res[0] + " " + res[1]]){
-        getProfRating(res[0],res[1],collegeName,nameTag);
-    }else if(res.length == 2 && localStorage[res[0] + " " + res[1]]){
-        rating = localStorage[res[0] + " " + res[1]];
-        nameTag.insertAdjacentHTML('afterend', '<p class="rmp-rating">' + rating + '</p>');
-    }else if(res.length == 3 && !localStorage[res[0] + " " + res[2]]){
-        getProfRating(res[0],res[2],collegeName,nameTag);
-            }else if(res.length == 3 && localStorage[res[0] + " " + res[2]]){
-        rating = localStorage[res[0] + " " + res[2]];
-        nameTag.insertAdjacentHTML('afterend', '<p class="rmp-rating">' + rating + '</p>');
+    //use rating from localStorage if possible to reduce the number of calls to CORS Proxy/RMP
+    getAndDisplayData(splitName,nameTag,collegeName);
 
-    }
 
     }catch(err){
         console.error("No professor exists for this class");
     }
+}//for loop
+}else{
+    getSingleUSMProfName(profName,collegeName);
 }
+
+
+}
+
+
+
+function getSingleUSMProfName(profName,collegeName){
+     var splitName = profName.innerHTML.split(" ");
+      //use rating from localStorage if possible to reduce the number of calls to CORS Proxy/RMP
+      var insertAfter = document.querySelector("#content-area > div > div > article > div.profile-name-title-container > div");
+      getAndDisplayData(splitName,insertAfter,collegeName);
+
+
+}
+
+
+function getAndDisplayData(splitName,tag,collegeName){
+
+    var rating = "";
+
+    if(splitName.length == 2 && !localStorage[splitName[0] + " " + splitName[1]]){
+        getProfRating(splitName[0],splitName[1],collegeName,tag);
+    }else if(splitName.length == 2 && localStorage[splitName[0] + " " + splitName[1]]){
+        rating = localStorage[splitName[0] + " " + splitName[1]];
+        tag.insertAdjacentHTML('afterend', '<p class="rmp-rating">' + rating + '</p>');
+    }else if(splitName.length == 3 && !localStorage[splitName[0] + " " + splitName[2]]){
+        getProfRating(splitName[0],splitName[2],collegeName,tag);
+    }else if(splitName.length == 3 && localStorage[splitName[0] + " " + splitName[2]]){
+        rating = localStorage[splitName[0] + " " + splitName[2]];
+        tag.insertAdjacentHTML('afterend', '<p class="rmp-rating">' + rating + '</p>');
+    }
 }

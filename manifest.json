@@ -7,7 +7,7 @@
     "content_scripts": 
       [
           {
-              "matches":["https://usm.maine.edu/courses*","https://online.umaine.edu/course-search*","https://online.umaine.edu/how-to-search-for-courses*"],
+              "matches":["https://usm.maine.edu/*","https://online.umaine.edu/course-search*","https://online.umaine.edu/how-to-search-for-courses*"],
               "css":["src/css/extension.css"],
               "js":["src/js/getData.js","src/js/extension.js"],
               "run_at": "document_end"
