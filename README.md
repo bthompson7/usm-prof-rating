@@ -3,10 +3,8 @@
 A Chrome extension that displays the professors rating from RateMyProfessor.com on the USM and UMaine course search page. 
 
 #### University of Southern Maine 
-![usm-extension](https://user-images.githubusercontent.com/35780502/95664078-72e72580-0b12-11eb-9a18-a47991bbba0e.png)
+![usm-extension](https://user-images.githubusercontent.com/35780502/95940748-253a1980-0dad-11eb-8952-3e83c3f621e2.png)
 
 #### University of Maine
 
-![umaine-extension](https://user-images.githubusercontent.com/35780502/95664079-74185280-0b12-11eb-939e-230d8f3ae782.png)
-
-
+![umaine-extension](https://user-images.githubusercontent.com/35780502/95940749-253a1980-0dad-11eb-8ac3-663abb973f27.png)
