@@ -3,6 +3,20 @@
     padding-bottom: 10px;
 }
 
+.rmp-rating a{
+  background-color: #ffffff;
+  border: 1px solid;
+  border-width:1px;  
+  border-style:ridge;
+  border-radius: .35rem;
+  padding: 10px 25px;
+  text-align: center;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
 .rmp-no-rating{
     padding-top: 10px;
     padding-bottom: 10x;
@@ -12,3 +26,4 @@
 .rmp-no-rating b{
     font-style: normal;
 }
+

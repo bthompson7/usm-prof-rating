@@ -9,7 +9,7 @@
           {
               "matches":["https://usm.maine.edu/*","https://online.umaine.edu/course-search*","https://online.umaine.edu/how-to-search-for-courses*"],
               "css":["src/css/extension.css"],
-              "js":["src/js/util/titlesToRemove.js","src/js/getData.js","src/js/extension.js"],
+              "js":["src/js/util/titlesToRemove.js","src/js/getDataFromRMP.js","src/js/extension.js"],
               "run_at": "document_end"
           }
       ],
