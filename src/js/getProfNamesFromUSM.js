@@ -43,8 +43,11 @@ for(var i =0; i < listOfNames.length; i++){
 
 function getSingleUSMProfName(profName,collegeName){
      var splitName = profName.innerHTML.split(" ");
-     console.log(splitName);
 
+      var firstName = nickNameToFull(splitName[0]);
+      if(firstName !== null){
+          splitName[0] = firstName;
+      }
       splitName = removeTitlesFromName(splitName);
       
       //use rating from localStorage if possible to reduce the number of calls to CORS Proxy/RMP

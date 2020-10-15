@@ -2,7 +2,12 @@ const titles = ['PhD','Ph.D.','MSN','RN', 'APRN-BC','CPNP-PC',
 'FNAP','MS','BS','AGACNP-BC','DNP','MSN','Chairman',
 'Chairwoman','Chairperson','M.D.','CNE','BSN','DNSc,','M.S.',
 'MS','RN-BC','MBA','NP-C','CCRN','AGPCNP-BC','APRN','PMH-NP',
-'CHSOS','MPH','Chair','Dean','President','Associate Dean'];
+'CHSOS','MPH','Chair','Dean','President','Associate Dean','V.M.D.'];
+
+
+let names = new Map()
+names.set('Tim','Timothy');
+names.set('Bob','Robert');
 
 /*
 
@@ -28,4 +33,14 @@ for(var i = profNameList.length - 1; i > 0; i--){
     }
 }
 return profNameList;
+}
+
+
+function nickNameToFull(name){
+    console.log(names.get(name) !== undefined);
+    if(names.get(name) !== undefined){
+        return names.get(name);
+    }else{
+        return null;
+    }
 }
