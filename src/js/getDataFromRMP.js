@@ -62,7 +62,12 @@ function parseJSON(json){
     var profID = data['response']['docs'][0]['pk_id'];
     var ratingsURL = "https://www.ratemyprofessors.com/ShowRatings.jsp?tid="+profID;
 
-   return "<b>Overall Rating: </b>" + aveRating + "/5 based on " + totalRatings + " ratings. <br><b>Difficulty: </b>" + isProfHard + "/5<br>" + "<a href=" + ratingsURL  +  ">View Ratings on RateMyProfessors.com</a>";
+    if(totalRatings > 0){
+      return "<b>Overall Rating: </b>" + aveRating + "/5 based on " + totalRatings + " ratings. <br><b>Difficulty: </b>" + isProfHard + "/5<br>" + "<a href=" + ratingsURL  +  ">View Ratings on RateMyProfessors.com</a>";
+    }else{
+      return "<b>Overall Rating: </b>No ratings were found <br><b>Difficulty:</b> No ratings were found ";
+    }
+    
   }catch(err){
     return "<b>Overall Rating: </b>No ratings were found <br><b>Difficulty:</b> No ratings were found ";
   }
