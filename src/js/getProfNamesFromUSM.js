@@ -1,64 +1,9 @@
 
 /*
-
-Author: Ben Thompson
-Description: 
-
-This script/extension is activated on https://usm.maine.edu/courses*. 
-It looks up the RateMyProfessor rating for each professor on the page and then displays it on the page
-so that people don't have to keep switching tabs.
-
-
-Extension TODOs:
-
-Short Term:
--Bug fixes for weird edge cases or anything else
-
-Long Term:
--Add support for Mainestreet class searching
--Add Support for prof. pages like https://usm.maine.edu/eng/mike-bendzela - WIP
--
-
-*/
-
-
-var win = window.location.href;
-if(win.indexOf("https://online.umaine.edu") > -1){
-    getProfNamesFromUMaine();
-}else{
-    getProfNamesFromUSM();
-}
-
-/*
-Gets a list of professor names from https://online.umaine.edu/course-search 
-*/
-
-function getProfNamesFromUMaine(){
-    var collegeName = "Maine";
-
-    console.log("UMaine Course Search")
-
-    var listOfNames = document.getElementsByClassName("classAttributeLeftHalf instructorList");
-for(var i =0; i < listOfNames.length; i++){
-    try{
-        var professorName = listOfNames[i].getElementsByTagName('a')[0].innerHTML;
-        var nameTag = listOfNames[i].getElementsByTagName('a')[0];
-        var splitName = professorName.split(" ");
-
-        console.log(splitName);
-    //use rating from localStorage if possible to reduce the number of calls to CORS Proxy/RMP
-    getAndDisplayData(splitName,nameTag,collegeName);
-
-    }catch(err){
-        console.error(err + "No professor exists for this class");
-    }
-}
-
-}
-
-/*
 Gets a list of professor names from https://usm.maine.edu/courses
 */
+getProfNamesFromUSM();
+
 
 function getProfNamesFromUSM(){
     console.log("USM Course Search")
@@ -89,7 +34,6 @@ for(var i =0; i < listOfNames.length; i++){
 
 
 }
-
 
 
 function getSingleUSMProfName(profName,collegeName){
