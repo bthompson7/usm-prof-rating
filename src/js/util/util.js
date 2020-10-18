@@ -1,3 +1,5 @@
+"use strict";
+
 const titles = ['PhD','Ph.D.','MSN','RN', 'APRN-BC','CPNP-PC',
 'FNAP','MS','BS','AGACNP-BC','DNP','MSN','Chairman',
 'Chairwoman','Chairperson','M.D.','CNE','BSN','DNSc,','M.S.',
@@ -8,6 +10,7 @@ const titles = ['PhD','Ph.D.','MSN','RN', 'APRN-BC','CPNP-PC',
 let names = new Map()
 names.set('Tim','Timothy');
 names.set('Bob','Robert');
+
 
 /*
 
@@ -43,4 +46,9 @@ function nickNameToFull(name){
     }else{
         return null;
     }
+}
+
+
+function fullToNick(name){
+
 }

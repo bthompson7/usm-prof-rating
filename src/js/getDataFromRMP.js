@@ -30,29 +30,6 @@ Http.send();
 
 }
 
-/*
-
-To test to make sure the proxy url only allows requests from whitelisted domains on heroku
-
-*/
-
-function getProfRatingTest(firstName,lastName,university){
-  var fullURL = proxyURL + "https://search-production.ratemyprofessors.com/solr/rmp/select/?solrformat=true&rows=2&wt=json&q="+$(firstName) + "+" +$(lastName) + "+" + $(university);
-  
-  const Http = new XMLHttpRequest();
-  var profLink = "";
-  var displayRating = "";
-  
-  Http.open("GET", fullURL, true);
-  Http.onreadystatechange = (e) => {
-       if(Http.status == 200 && Http.readyState == 4){
-        var displayRating = parseJSON(Http.response);
-       }
-      }
-  Http.send();
-  
-  }
-
 function parseJSON(json){
   try{
     var data = JSON.parse(json);
