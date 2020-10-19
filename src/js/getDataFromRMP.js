@@ -7,7 +7,6 @@ Handles getting all the data from RateMyProfessor
 var proxyURL = "https://intense-fjord-93634.herokuapp.com/"
 var baseURL = "https://search-production.ratemyprofessors.com/solr/rmp/select/?solrformat=true&rows=2&wt=json&q=";
 
-
 function getProfRating(firstName,lastName,university,nameTag){
 var fullURL = proxyURL + "https://search-production.ratemyprofessors.com/solr/rmp/select/?solrformat=true&rows=2&wt=json&q="+firstName + "+" +lastName + "+" + university;
 
@@ -22,12 +21,10 @@ Http.onreadystatechange = (e) => {
         if(!localStorage.getItem(firstName + " " + lastName)){
           localStorage.setItem(firstName + " " + lastName,displayRating);
         }
-
       }
      }
     }
 Http.send();
-
 }
 
 function parseJSON(json){

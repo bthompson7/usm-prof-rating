@@ -1,7 +1,10 @@
 
 /*
+
 Gets a list of professor names from https://usm.maine.edu/courses
+
 */
+
 "use strict";
 
 getProfNamesFromUSM();

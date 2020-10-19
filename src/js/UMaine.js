@@ -1,6 +1,9 @@
 /*
-Gets a list of professor names from https://online.umaine.edu/course-search 
+
+Gets a list of professor names from https://online.umaine.edu/course-search
+
 */
+
 "use strict";
 
 getProfNamesFromUMaine();
@@ -19,7 +22,6 @@ for(var i =0; i < listOfNames.length; i++){
             //use rating from localStorage if possible to reduce the number of calls to CORS Proxy/RMP
             getAndDisplayData(splitName,nameTag,collegeName); 
     }
-
     }catch(err){
         console.error(err + "No professor exists for this class");
     }
