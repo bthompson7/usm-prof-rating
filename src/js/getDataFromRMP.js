@@ -8,24 +8,45 @@ var proxyURL = "https://intense-fjord-93634.herokuapp.com/"
 var baseURL = "https://search-production.ratemyprofessors.com/solr/rmp/select/?solrformat=true&rows=2&wt=json&q=";
 
 function getProfRating(firstName,lastName,university,nameTag){
-var fullURL = proxyURL + "https://search-production.ratemyprofessors.com/solr/rmp/select/?solrformat=true&rows=2&wt=json&q="+firstName + "+" +lastName + "+" + university;
+var fullURL = proxyURL + "https://search-production.ratemyprofessors.com/solr/rmp/select/?solrformat=true&rows=2&wt=json&q=" +firstName + "+" +lastName + "+" + university;
 
 const Http = new XMLHttpRequest();
-Http.open("GET", fullURL, true);
 
-Http.onreadystatechange = (e) => {
-     if(Http.status == 200 && Http.readyState == 4){
-      var displayRating = parseJSON(Http.response);
-      if(displayRating !== ""){
-        nameTag.insertAdjacentHTML('afterend', '<div class="rmp-rating">' + displayRating +  '</div>');
-        if(!localStorage.getItem(firstName + " " + lastName)){
-          localStorage.setItem(firstName + " " + lastName,displayRating);
+  Http.open("GET", fullURL, true);
+  
+  Http.onreadystatechange = (e) => {
+       if(Http.status == 200 && Http.readyState == 4){
+        var displayRating = parseJSON(Http.response);
+        if(!displayRating.includes("No ratings were found")){
+          nameTag.insertAdjacentHTML('afterend', '<div class="rmp-rating">' + displayRating +  '</div>');
+          if(!localStorage.getItem(firstName + " " + lastName)){
+            localStorage.setItem(firstName + " " + lastName,displayRating);
+          }
+        }else if(displayRating.includes("No ratings were found")){ //another request
+          const Http2 = new XMLHttpRequest();
+          var name2 = nickNameToFull(firstName);
+          var fullURL2 = proxyURL + "https://search-production.ratemyprofessors.com/solr/rmp/select/?solrformat=true&rows=2&wt=json&q=" +name2+"+"+lastName+"+"+university;
+          Http2.open("GET",fullURL2,true);
+          Http2.onreadystatechange = (e2) =>{
+            if(Http2.status == 200 && Http2.readyState == 4){
+              var displayRating2 = parseJSON(Http2.response);
+              nameTag.insertAdjacentHTML('afterend', '<div class="rmp-rating">' + displayRating2 +  '</div>');
+              if(!localStorage.getItem(firstName + " " + lastName)){
+                localStorage.setItem(firstName + " " + lastName,displayRating2);
+              }
+            }
+          
+          }
+          Http2.send();
+
+
         }
+       }
       }
-     }
-    }
-Http.send();
+  Http.send();  
 }
+
+
 
 function parseJSON(json){
   try{
@@ -37,7 +58,17 @@ function parseJSON(json){
     var ratingsURL = "https://www.ratemyprofessors.com/ShowRatings.jsp?tid="+profID;
 
     if(totalRatings > 0){
-      return "<b>Overall Rating: </b>" + aveRating + "/5 based on " + totalRatings + " ratings. <br><b>Difficulty: </b>" + isProfHard + "/5<br>" + "<a href=" + ratingsURL  +  ">View Ratings on RateMyProfessors.com</a>";
+      if(aveRating >= 3.0){ //good 
+        return "<img src=" + chrome.extension.getURL('./src/img/rmp-good.jpg') + "><br><b>Overall Rating: </b>" + aveRating + "/5 based on " + totalRatings + " ratings. <br><b>Difficulty: </b>" + isProfHard + "/5<br>" + "<a href=" + ratingsURL  +  ">View Ratings on RateMyProfessors.com</a>";
+
+      }
+      else if(aveRating >= 2.0 && aveRating <= 2.9){//average
+        return "<img src=" + chrome.extension.getURL('./src/img/rmp-average.jpg') + "><br><b>Overall Rating: </b>" + aveRating + "/5 based on " + totalRatings + " ratings. <br><b>Difficulty: </b>" + isProfHard + "/5<br>" + "<a href=" + ratingsURL  +  ">View Ratings on RateMyProfessors.com</a>";
+
+      }else if(aveRating < 2.0){//poor
+        return "<img src=" + chrome.extension.getURL('./src/img/rmp-poor.jpg') + "><br><b>Overall Rating: </b>" + aveRating + "/5 based on " + totalRatings + " ratings. <br><b>Difficulty: </b>" + isProfHard + "/5<br>" + "<a href=" + ratingsURL  +  ">View Ratings on RateMyProfessors.com</a>";
+
+      }
     }else{
       return "<b>Overall Rating: </b>No ratings were found <br><b>Difficulty:</b> No ratings were found ";
     }

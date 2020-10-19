@@ -7,10 +7,10 @@ const titles = ['PhD','Ph.D.','MSN','RN', 'APRN-BC','CPNP-PC',
 'CHSOS','MPH','Chair','Dean','President','Associate Dean','V.M.D.'];
 
 
+//Maps Nick => Full
 let names = new Map()
 names.set('Tim','Timothy');
 names.set('Bob','Robert');
-
 
 /*
 
@@ -40,15 +40,9 @@ return profNameList;
 
 
 function nickNameToFull(name){
-    console.log(names.get(name) !== undefined);
     if(names.get(name) !== undefined){
         return names.get(name);
     }else{
         return null;
     }
-}
-
-
-function fullToNick(name){
-
 }
