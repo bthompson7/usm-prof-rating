@@ -2,13 +2,13 @@
     "name": "UMaine System Professor Ratings",
     "short_name": "UMS RMP",
     "description": "Displays the professors rating from RateMyProfessors.com on the USM and UMaine course search page for easy access.",
-    "version": "1.1.0",
+    "version": "1.0.0",
   
     "content_scripts": 
       [
 
           {
-              "matches":["https://online.umaine.edu/course-search*","https://online.umaine.edu/how-to-search-for-courses*"],
+              "matches":["https://*.umaine.edu/*"],
               "css":["src/css/extension.css"],
               "js":["src/js/util/util.js","src/js/getDataFromRMP.js","src/js/UMaine.js"],
               "run_at": "document_end"

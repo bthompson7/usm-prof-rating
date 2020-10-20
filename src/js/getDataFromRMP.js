@@ -4,15 +4,14 @@ Handles getting all the data from RateMyProfessor
 
 */
 
-var proxyURL = "https://intense-fjord-93634.herokuapp.com/"
-var baseURL = "https://search-production.ratemyprofessors.com/solr/rmp/select/?solrformat=true&rows=2&wt=json&q=";
+var fullURL = "https://intense-fjord-93634.herokuapp.com/https://search-production.ratemyprofessors.com/solr/rmp/select/?solrformat=true&rows=2&wt=json&q=";
 
 function getProfRating(firstName,lastName,university,nameTag){
-var fullURL = proxyURL + "https://search-production.ratemyprofessors.com/solr/rmp/select/?solrformat=true&rows=2&wt=json&q=" +firstName + "+" +lastName + "+" + university;
+var query = `${fullURL} + ${firstName}+${lastName}+${university}`;
 
 const Http = new XMLHttpRequest();
 
-  Http.open("GET", fullURL, true);
+  Http.open("GET", query, true);
   
   Http.onreadystatechange = (e) => {
        if(Http.status == 200 && Http.readyState == 4){
@@ -26,8 +25,6 @@ const Http = new XMLHttpRequest();
 
   Http.send();  
 }
-
-
 
 function parseJSON(json){
   try{

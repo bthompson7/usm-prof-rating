@@ -14,12 +14,12 @@ function getProfNamesFromUSM(){
 
 var listOfNames = document.getElementsByClassName("instructor-link section-item");
 var collegeName = "University+of+Southern+Maine"
-var profName = document.querySelector("#content-area > div > div > article > div.profile-name-title-container > h2");
 
 if(listOfNames.length > 0){
 for(var i =0; i < listOfNames.length; i++){
     try{
-            for(var j = 0; j < listOfNames[i].getElementsByTagName('a').length; j++){
+        console.log(listOfNames[i].getElementsByTagName('a').length);
+            for(var j = 0; j < 1; j++){
                 var professorName = listOfNames[i].getElementsByTagName('a')[j].innerHTML;
                 var nameTag = listOfNames[i].getElementsByTagName('a')[j];
                 var splitName = professorName.split(" ");
@@ -31,6 +31,7 @@ for(var i =0; i < listOfNames.length; i++){
     }
 }//for loop
 }else{
+    var profName = document.querySelector("#content-area > div > div > article > div.profile-name-title-container > h2");
     getSingleUSMProfName(profName,collegeName);
 }
 
@@ -62,6 +63,6 @@ function getAndDisplayData(splitName,tag,collegeName){
         getProfRating(splitName[0],splitName[splitName.length - 1],collegeName,tag);
     }else{
         rating = localStorage[splitName[0] + " " + splitName[splitName.length - 1]];
-        tag.insertAdjacentHTML('afterend', '<p class="rmp-rating">' + rating + '</p>');
+        tag.insertAdjacentHTML('afterend', '<div class="rmp-rating">' + rating + '</div>');
     }
 }
