@@ -25,10 +25,10 @@
       "https://search-production.ratemyprofessors.com/*"
     ],
     "icons": {
-      "16":"icons/icon16.png",
-      "48":"icons/icon48.png",
-      "128":"icons/icon128.png" 
+      "16":"assets/extension_icons/icon16.png",
+      "48":"assets/extension_icons/icon48.png",
+      "128":"assets/extension_icons/icon128.png" 
     },
-    "web_accessible_resources": ["src/img/rmp-average.jpg","src/img/rmp-good.jpg","src/img/rmp-poor.jpg"],
+    "web_accessible_resources": ["assets/rmp-average.jpg","assets/rmp-good.jpg","assets/rmp-poor.jpg"],
     "manifest_version": 2
   }

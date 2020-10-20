@@ -39,10 +39,20 @@ return profNameList;
 }
 
 
+/*
+
+Return the fullname based on the nickname given
+*/
+
 function nickNameToFull(name){
     if(names.get(name) !== undefined){
         return names.get(name);
     }else{
         return null;
     }
+}
+
+
+function roundNumber(num){
+
 }

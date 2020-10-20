@@ -17,32 +17,13 @@ const Http = new XMLHttpRequest();
   Http.onreadystatechange = (e) => {
        if(Http.status == 200 && Http.readyState == 4){
         var displayRating = parseJSON(Http.response);
-        if(!displayRating.includes("No ratings were found")){
-          nameTag.insertAdjacentHTML('afterend', '<div class="rmp-rating">' + displayRating +  '</div>');
+        nameTag.insertAdjacentHTML('afterend', '<div class="rmp-rating">' + displayRating +  '</div>');
           if(!localStorage.getItem(firstName + " " + lastName)){
             localStorage.setItem(firstName + " " + lastName,displayRating);
           }
-        }else if(displayRating.includes("No ratings were found")){ //another request
-          const Http2 = new XMLHttpRequest();
-          var name2 = nickNameToFull(firstName);
-          var fullURL2 = proxyURL + "https://search-production.ratemyprofessors.com/solr/rmp/select/?solrformat=true&rows=2&wt=json&q=" +name2+"+"+lastName+"+"+university;
-          Http2.open("GET",fullURL2,true);
-          Http2.onreadystatechange = (e2) =>{
-            if(Http2.status == 200 && Http2.readyState == 4){
-              var displayRating2 = parseJSON(Http2.response);
-              nameTag.insertAdjacentHTML('afterend', '<div class="rmp-rating">' + displayRating2 +  '</div>');
-              if(!localStorage.getItem(firstName + " " + lastName)){
-                localStorage.setItem(firstName + " " + lastName,displayRating2);
-              }
-            }
-          
-          }
-          Http2.send();
-
-
-        }
        }
       }
+
   Http.send();  
 }
 
@@ -59,17 +40,18 @@ function parseJSON(json){
 
     if(totalRatings > 0){
       if(aveRating >= 3.0){ //good 
-        return "<img src=" + chrome.extension.getURL('./src/img/rmp-good.jpg') + "><br><b>Overall Rating: </b>" + aveRating + "/5 based on " + totalRatings + " ratings. <br><b>Difficulty: </b>" + isProfHard + "/5<br>" + "<a href=" + ratingsURL  +  ">View Ratings on RateMyProfessors.com</a>";
-
+        return "<img src=" + chrome.extension.getURL('./assets/rmp-good.jpg') + "><br><b>Overall Rating: </b>" + aveRating + "/5 based on " + totalRatings + " ratings. <br><b>Difficulty: </b>" + isProfHard + "/5<br>" + "<a href=" + ratingsURL  +  ">View Ratings on RateMyProfessors.com</a>";
       }
+
       else if(aveRating >= 2.0 && aveRating <= 2.9){//average
-        return "<img src=" + chrome.extension.getURL('./src/img/rmp-average.jpg') + "><br><b>Overall Rating: </b>" + aveRating + "/5 based on " + totalRatings + " ratings. <br><b>Difficulty: </b>" + isProfHard + "/5<br>" + "<a href=" + ratingsURL  +  ">View Ratings on RateMyProfessors.com</a>";
+        return "<img src=" + chrome.extension.getURL('./assets/rmp-average.jpg') + "><br><b>Overall Rating: </b>" + aveRating + "/5 based on " + totalRatings + " ratings. <br><b>Difficulty: </b>" + isProfHard + "/5<br>" + "<a href=" + ratingsURL  +  ">View Ratings on RateMyProfessors.com</a>";
 
       }else if(aveRating < 2.0){//poor
-        return "<img src=" + chrome.extension.getURL('./src/img/rmp-poor.jpg') + "><br><b>Overall Rating: </b>" + aveRating + "/5 based on " + totalRatings + " ratings. <br><b>Difficulty: </b>" + isProfHard + "/5<br>" + "<a href=" + ratingsURL  +  ">View Ratings on RateMyProfessors.com</a>";
+        return "<img src=" + chrome.extension.getURL('./assets/rmp-poor.jpg') + "><br><b>Overall Rating: </b>" + aveRating + "/5 based on " + totalRatings + " ratings. <br><b>Difficulty: </b>" + isProfHard + "/5<br>" + "<a href=" + ratingsURL  +  ">View Ratings on RateMyProfessors.com</a>";
 
       }
     }else{
+      
       return "<b>Overall Rating: </b>No ratings were found <br><b>Difficulty:</b> No ratings were found ";
     }
     
