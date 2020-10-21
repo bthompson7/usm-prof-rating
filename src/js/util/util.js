@@ -9,8 +9,8 @@ Contains useful functions that are shared between different scripts
 const titles = ['PhD','Ph.D.','MSN','RN', 'APRN-BC','CPNP-PC',
 'FNAP','MS','BS','AGACNP-BC','DNP','MSN','Chairman',
 'Chairwoman','Chairperson','M.D.','CNE','BSN','DNSc,','M.S.',
-'MS','RN-BC','MBA','NP-C','CCRN','AGPCNP-BC','APRN','PMH-NP',
-'CHSOS','MPH','Chair','Dean','President','Associate Dean','V.M.D.'];
+'MS','M.A.','MA','RN-BC','MBA','NP-C','CCRN','AGPCNP-BC','APRN','PMH-NP',
+'CHSOS','MPH','Chair','Dean','President','Associate Dean','V.M.D.','FAANP','FNP-BC'];
 
 
 //Maps Nick Name => Full Name
@@ -76,6 +76,23 @@ function nickNameToFull(name){
         return null;
     }
 }
+
+
+/*
+Round the numbers to 1 decimal point
+
+*/
+
+function roundNumber(num){
+    if(num === undefined){
+        return null;
+    }
+    return Math.round(num * 10) / 10;
+
+
+}
+
+
 
 /*
 
