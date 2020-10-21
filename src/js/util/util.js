@@ -1,7 +1,6 @@
 /*
 
-util.js contains useful functions that are shared between different scripts so it makes the code cleaner 
-because I don't have to repeat myself
+Contains useful functions that are shared between different scripts 
 
 */
 
@@ -21,18 +20,11 @@ names.set('Bob','Robert');
 
 /*
 
-**FUNCTION START**
-
-*/
-
-
-/*
-
 Get 1 week in unix time
 
 */
 function getOneWeekInUnixTime(){
-    return 518400;
+    return 518400; //this is 1 unix day which is ~86400. so 86400 * 7 = 518400
 }
 
 /*
@@ -46,7 +38,7 @@ function getCurrentUnixTime(){
 
 /*
 
-Function to remove extra words/titles from a persons name
+Removes extra words/titles from a persons name
 
 For example:
 Shelton Waldrep, Chair => Shelton Waldrep
@@ -101,20 +93,20 @@ function jsonToHTML(jsonObject){
         return "<img src=" + chrome.extension.getURL('./assets/rmp-good.jpg') +
          "><br><b>Overall Rating: </b>" + jsonObject['avgRating'] + "/5 based on " + 
          jsonObject['totalRatings'] + " ratings. <br><b>Difficulty: </b>" + jsonObject['profHardness'] +
-          "/5<br>" + "<a href=" + jsonObject['profID'] + ">View Ratings on RateMyProfessors.com</a>";
+          "/5<br>" + "<a href=" + ratingURL + jsonObject['profID'] + ">View Ratings on RateMyProfessors.com</a>";
   
       }else if(avgProfRating >= 2.0 && avgProfRating <= 2.9){
   
         return "<img src=" + chrome.extension.getURL('./assets/rmp-average.jpg') +
         "><br><b>Overall Rating: </b>" + jsonObject['avgRating'] + "/5 based on " + 
         jsonObject['totalRatings'] + " ratings. <br><b>Difficulty: </b>" + jsonObject['profHardness'] +
-         "/5<br>" + "<a href=" + jsonObject['profID'] + ">View Ratings on RateMyProfessors.com</a>";
+         "/5<br>" + "<a href=" + ratingURL + jsonObject['profID'] + ">View Ratings on RateMyProfessors.com</a>";
       }else if(avgProfRating < 2.0){
   
         return "<img src=" + chrome.extension.getURL('./assets/rmp-poor.jpg') +
         "><br><b>Overall Rating: </b>" + jsonObject['avgRating'] + "/5 based on " + 
         jsonObject['totalRatings'] + " ratings. <br><b>Difficulty: </b>" + jsonObject['profHardness'] +
-         "/5<br>" + "<a href=" + jsonObject['profID'] + ">View Ratings on RateMyProfessors.com</a>";
+         "/5<br>" + "<a href=" + ratingURL + jsonObject['profID'] + ">View Ratings on RateMyProfessors.com</a>";
       }
     }else{
       return "<b>Overall Rating: </b>No ratings were found <br><b>Difficulty:</b> No ratings were found ";
