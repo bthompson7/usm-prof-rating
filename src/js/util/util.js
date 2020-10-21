@@ -1,3 +1,10 @@
+/*
+
+util.js contains useful functions that are shared between different scripts so it makes the code cleaner 
+because I don't have to repeat myself
+
+*/
+
 "use strict";
 
 const titles = ['PhD','Ph.D.','MSN','RN', 'APRN-BC','CPNP-PC',
@@ -7,14 +14,39 @@ const titles = ['PhD','Ph.D.','MSN','RN', 'APRN-BC','CPNP-PC',
 'CHSOS','MPH','Chair','Dean','President','Associate Dean','V.M.D.'];
 
 
-//Maps Nick => Full
+//Maps Nick Name => Full Name
 let names = new Map()
 names.set('Tim','Timothy');
 names.set('Bob','Robert');
 
 /*
 
-Utility function to remove extra words/titles from a persons name
+**FUNCTION START**
+
+*/
+
+
+/*
+
+Get 1 week in unix time
+
+*/
+function getOneWeekInUnixTime(){
+    return 518400;
+}
+
+/*
+
+Get the current unix time
+
+*/
+function getCurrentUnixTime(){
+    return Math.floor(Date.now() / 1000);
+}
+
+/*
+
+Function to remove extra words/titles from a persons name
 
 For example:
 Shelton Waldrep, Chair => Shelton Waldrep
@@ -42,6 +74,7 @@ return profNameList;
 /*
 
 Return the fullname based on the nickname given
+
 */
 
 function nickNameToFull(name){
@@ -52,7 +85,39 @@ function nickNameToFull(name){
     }
 }
 
+/*
 
-function roundNumber(num){
+Convert a json object into an html tag to display
 
-}
+*/
+function jsonToHTML(jsonObject){
+
+  
+    var ratingURL = "https://www.ratemyprofessors.com/ShowRatings.jsp?tid=";
+    if(jsonObject['foundProf']){
+      var avgProfRating = jsonObject['avgRating'];
+  
+      if(avgProfRating >= 3.0){
+        return "<img src=" + chrome.extension.getURL('./assets/rmp-good.jpg') +
+         "><br><b>Overall Rating: </b>" + jsonObject['avgRating'] + "/5 based on " + 
+         jsonObject['totalRatings'] + " ratings. <br><b>Difficulty: </b>" + jsonObject['profHardness'] +
+          "/5<br>" + "<a href=" + jsonObject['profID'] + ">View Ratings on RateMyProfessors.com</a>";
+  
+      }else if(avgProfRating >= 2.0 && avgProfRating <= 2.9){
+  
+        return "<img src=" + chrome.extension.getURL('./assets/rmp-average.jpg') +
+        "><br><b>Overall Rating: </b>" + jsonObject['avgRating'] + "/5 based on " + 
+        jsonObject['totalRatings'] + " ratings. <br><b>Difficulty: </b>" + jsonObject['profHardness'] +
+         "/5<br>" + "<a href=" + jsonObject['profID'] + ">View Ratings on RateMyProfessors.com</a>";
+      }else if(avgProfRating < 2.0){
+  
+        return "<img src=" + chrome.extension.getURL('./assets/rmp-poor.jpg') +
+        "><br><b>Overall Rating: </b>" + jsonObject['avgRating'] + "/5 based on " + 
+        jsonObject['totalRatings'] + " ratings. <br><b>Difficulty: </b>" + jsonObject['profHardness'] +
+         "/5<br>" + "<a href=" + jsonObject['profID'] + ">View Ratings on RateMyProfessors.com</a>";
+      }
+    }else{
+      return "<b>Overall Rating: </b>No ratings were found <br><b>Difficulty:</b> No ratings were found ";
+    }
+  
+  }

@@ -15,10 +15,16 @@ const Http = new XMLHttpRequest();
   
   Http.onreadystatechange = (e) => {
        if(Http.status == 200 && Http.readyState == 4){
-        var displayRating = parseJSON(Http.response);
-        nameTag.insertAdjacentHTML('afterend', '<div class="rmp-rating">' + displayRating +  '</div>');
+        var ratingData = parseDataFromRMP(Http.response);
+
+        var htmlToInsert = jsonToHTML(ratingData);
+
+          nameTag.insertAdjacentHTML('afterend', '<div class="rmp-rating">' + htmlToInsert +  '</div>');
           if(!localStorage.getItem(firstName + " " + lastName)){
-            localStorage.setItem(firstName + " " + lastName,displayRating);
+            localStorage.setItem(firstName + " " + lastName,JSON.stringify(ratingData));
+
+            var local = localStorage.getItem(firstName + " " + lastName);
+            console.log(local);
           }
        }
       }
@@ -26,35 +32,32 @@ const Http = new XMLHttpRequest();
   Http.send();  
 }
 
-function parseJSON(json){
+function parseDataFromRMP(jsonData){
   try{
-    var data = JSON.parse(json);
-    var aveRating = data['response']['docs'][0]['averageratingscore_rf'];
+    var data = JSON.parse(jsonData);
+    var avgRating = data['response']['docs'][0]['averageratingscore_rf'];
     var totalRatings = data['response']['docs'][0]['total_number_of_ratings_i'];
-    var isProfHard = data['response']['docs'][0]['averageeasyscore_rf'];
+    var profHardness = data['response']['docs'][0]['averageeasyscore_rf'];
     var profID = data['response']['docs'][0]['pk_id'];
     var ratingsURL = "https://www.ratemyprofessors.com/ShowRatings.jsp?tid="+profID;
 
-    if(totalRatings > 0){
-      if(aveRating >= 3.0){ //good 
-        return "<img src=" + chrome.extension.getURL('./assets/rmp-good.jpg') + "><br><b>Overall Rating: </b>" + aveRating + "/5 based on " + totalRatings + " ratings. <br><b>Difficulty: </b>" + isProfHard + "/5<br>" + "<a href=" + ratingsURL  +  ">View Ratings on RateMyProfessors.com</a>";
-      }
 
-      else if(aveRating >= 2.0 && aveRating <= 2.9){//average
-        return "<img src=" + chrome.extension.getURL('./assets/rmp-average.jpg') + "><br><b>Overall Rating: </b>" + aveRating + "/5 based on " + totalRatings + " ratings. <br><b>Difficulty: </b>" + isProfHard + "/5<br>" + "<a href=" + ratingsURL  +  ">View Ratings on RateMyProfessors.com</a>";
+    var age = getCurrentUnixTime();
 
-      }else if(aveRating < 2.0){//poor
-        return "<img src=" + chrome.extension.getURL('./assets/rmp-poor.jpg') + "><br><b>Overall Rating: </b>" + aveRating + "/5 based on " + totalRatings + " ratings. <br><b>Difficulty: </b>" + isProfHard + "/5<br>" + "<a href=" + ratingsURL  +  ">View Ratings on RateMyProfessors.com</a>";
+    var foundProf = {'foundProf':true,'avgRating':avgRating, 'totalRatings':totalRatings,
+    'profHardness':profHardness,'profID':profID,'ratingsURL':ratingsURL,'lastUpdated':age};
+     return foundProf;
 
-      }
-    }else{
-      
-      return "<b>Overall Rating: </b>No ratings were found <br><b>Difficulty:</b> No ratings were found ";
-    }
-    
   }catch(err){
-    return "<b>Overall Rating: </b>No ratings were found <br><b>Difficulty:</b> No ratings were found ";
+    var age = getCurrentUnixTime();
+
+    var noProfFound = {'foundProf':false,'avgRating':'No ratings found',
+     'profHardness':'No ratings found', "lastUpdated":age};
+    return noProfFound;
+
   }
   
 }
+
+
 

@@ -40,6 +40,16 @@ function getAndDisplayData(splitName,tag,collegeName){
         getProfRating(splitName[0],splitName[splitName.length - 1],collegeName,tag);
     }else{
         rating = localStorage[splitName[0] + " " + splitName[splitName.length - 1]];
-        tag.insertAdjacentHTML('afterend', '<p class="rmp-rating">' + rating + '</p>');
+        var ratingObject = JSON.parse(rating);
+
+        //check if we need to refresh the ratings
+        if(getCurrentUnixTime() - ratingObject['lastUpdated'] < getOneWeekInUnixTime()){
+            tag.insertAdjacentHTML('afterend', '<div class="rmp-rating">' + jsonToHTML(ratingObject) + '</div>');
+        }else{
+            console.log("Data is old, getting new data from the RMP.com api!")
+            getProfRating(splitName[0],splitName[splitName.length - 1],collegeName,tag);  
+        }
+
+
     }
 }
