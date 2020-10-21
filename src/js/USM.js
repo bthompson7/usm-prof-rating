@@ -18,7 +18,8 @@ var collegeName = "University+of+Southern+Maine"
 if(listOfNames.length > 0){
 for(var i =0; i < listOfNames.length; i++){
     try{
-            for(var j = 0; j < 1; j++){
+            var numOfProfs = listOfNames[i].getElementsByTagName('a').length;
+            for(var j = 0; j < numOfProfs; j++){
                 var professorName = listOfNames[i].getElementsByTagName('a')[j].innerHTML;
                 var nameTag = listOfNames[i].getElementsByTagName('a')[j];
                 var splitName = professorName.split(" ");

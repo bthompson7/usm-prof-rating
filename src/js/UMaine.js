@@ -16,13 +16,14 @@ function getProfNamesFromUMaine(){
     if(listOfNames.length > 0){
         for(var i =0; i < listOfNames.length; i++){
             try{
-             
-                for(var j = 0; j < 1; j++){
+            
+                var numOfProfs = listOfNames[i].getElementsByTagName('a').length;
+                for(var j = 0; j < numOfProfs; j++){
                     var professorName = listOfNames[i].getElementsByTagName('a')[j].innerHTML;
                     var nameTag = listOfNames[i].getElementsByTagName('a')[j];
                     var splitName = professorName.split(" ");
                     //use rating from localStorage if possible to reduce the number of calls to CORS Proxy/RMP
-                    getAndDisplayData(splitName,nameTag,collegeName); 
+                    injectHTML(splitName,nameTag,collegeName); 
             }
             }catch(err){
                 console.error(err + "No professor exists for this class");
@@ -34,7 +35,7 @@ function getProfNamesFromUMaine(){
 }
 
 
-function getAndDisplayData(splitName,tag,collegeName){
+function injectHTML(splitName,tag,collegeName){
     var rating = "";
     if(!localStorage[splitName[0] + " " + splitName[splitName.length - 1]]){
         getProfRating(splitName[0],splitName[splitName.length - 1],collegeName,tag);
