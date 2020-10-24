@@ -29,6 +29,6 @@
       "48":"assets/extension_icons/icon48.png",
       "128":"assets/extension_icons/icon128.png" 
     },
-    "web_accessible_resources": ["assets/rmp-average.jpg","assets/rmp-good.jpg","assets/rmp-poor.jpg"],
+    "web_accessible_resources": ["assets/rmp-zero.jpg","assets/rmp-average.jpg","assets/rmp-good.jpg","assets/rmp-poor.jpg"],
     "manifest_version": 2
   }
