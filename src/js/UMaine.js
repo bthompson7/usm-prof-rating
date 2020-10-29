@@ -1,6 +1,6 @@
 /*
 
-Gets a list of professor names from https://online.umaine.edu/course-search
+Gets a list of professor names from https://online.umaine.edu/course-search or any umane course search page
 
 */
 
@@ -18,15 +18,34 @@ function getProfNamesFromUMaine(){
             try{
             
                 var numOfProfs = listOfNames[i].getElementsByTagName('a').length;
+               
+            if(numOfProfs == 1){
                 for(var j = 0; j < numOfProfs; j++){
                     var professorName = listOfNames[i].getElementsByTagName('a')[j].innerHTML;
-                    var nameTag = listOfNames[i].getElementsByTagName('a')[j];
+                    console.log(professorName);
+                    var nameTag = listOfNames[i].getElementsByTagName('a')[j];           
                     var splitName = professorName.split(" ");
                     //use rating from localStorage if possible to reduce the number of calls to CORS Proxy/RMP
                     injectHTML(splitName,nameTag,collegeName); 
+                }
+            }else if(numOfProfs > 1){
+                for(var j = 0; j <= numOfProfs; j++){
+                    var professorName = listOfNames[i].getElementsByTagName('a')[j].innerHTML;
+
+                    if(!professorName.includes("View Ratings on RateMyProfessors.com")){
+
+                    console.log(professorName);
+                    var nameTag = listOfNames[i].getElementsByTagName('a')[j];           
+                    var splitName = professorName.split(" ");
+                    //use rating from localStorage if possible to reduce the number of calls to CORS Proxy/RMP
+                    injectHTML(splitName,nameTag,collegeName); 
+                    
+                    }
+
+                }
             }
             }catch(err){
-                console.error(err + "No professor exists for this class");
+                console.error(err);
             }
         }
     }
@@ -38,7 +57,7 @@ function getProfNamesFromUMaine(){
 function injectHTML(splitName,tag,collegeName){
     var rating = "";
     if(!localStorage[splitName[0] + " " + splitName[splitName.length - 1]]){
-        getProfRating(splitName[0],splitName[splitName.length - 1],collegeName,tag);
+        searchForProfessor(splitName[0],splitName[splitName.length - 1],collegeName,tag);
     }else{
         rating = localStorage[splitName[0] + " " + splitName[splitName.length - 1]];
         var ratingObject = JSON.parse(rating);
@@ -48,7 +67,7 @@ function injectHTML(splitName,tag,collegeName){
             tag.insertAdjacentHTML('afterend', '<div class="rmp-rating">' + jsonToHTML(ratingObject) + '</div>');
         }else{
             console.log("Data is old, getting new data from the RMP.com api!")
-            getProfRating(splitName[0],splitName[splitName.length - 1],collegeName,tag);  
+            searchForProfessor(splitName[0],splitName[splitName.length - 1],collegeName,tag);  
         }
 
 

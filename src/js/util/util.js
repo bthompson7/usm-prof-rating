@@ -12,11 +12,52 @@ const titles = ['PhD','Ph.D.','MSN','RN', 'APRN-BC','CPNP-PC',
 'MS','M.A.','MA','RN-BC','MBA','NP-C','CCRN','AGPCNP-BC','APRN','PMH-NP',
 'CHSOS','MPH','Chair','Dean','President','Associate Dean','V.M.D.','FAANP','FNP-BC'];
 
-
 //Maps Nick Name => Full Name
-let names = new Map()
+let names = new Map();
 names.set('Tim','Timothy');
 names.set('Bob','Robert');
+
+
+/*
+
+Any courses where we can't find the professor using the 
+firstname + lastname we will lookup the professor using the last name and
+then checking if they match the current subject we are in.
+
+This will get updated as I find them.
+
+*/
+let courses = new Map();
+courses.set("BIO","Biology")
+courses.set("CHY","Chemistry")
+
+/*
+
+Convert a full name to a nickname 
+
+
+*/
+
+function fullNameToNick(name){
+    if(nickNames.get(name) !== undefined){
+        return nickNames.get(name);
+    }else{
+        return null;
+    }
+}
+
+/*
+
+Lookup a course
+
+*/
+function getCourse(courseName){
+    if(courses.get(courseName) !== undefined){
+        return courses.get(courseName);
+    }else{
+        return null;
+    }
+}
 
 /*
 
@@ -24,7 +65,7 @@ Get 1 week in unix time
 
 */
 function getOneWeekInUnixTime(){
-    return 518400; //this is 1 unix day which is ~86400. so 86400 * 7 = 518400
+    return 518400;
 }
 
 /*
@@ -96,7 +137,7 @@ function roundNumber(num){
 
 /*
 
-Convert a json object into an html tag to display
+Convert a json object into an html tag to display on the webpage
 
 */
 function jsonToHTML(jsonObject){
@@ -110,20 +151,20 @@ function jsonToHTML(jsonObject){
         return "<img src=" + chrome.extension.getURL('./assets/rmp-good.jpg') +
          "><br><b>Overall Rating: </b>" + jsonObject['avgRating'] + "/5 based on " + 
          jsonObject['totalRatings'] + " ratings. <br><b>Difficulty: </b>" + jsonObject['profHardness'] +
-          "/5<br>" + "<a href=" + ratingURL + jsonObject['profID'] + ">View Ratings on RateMyProfessors.com</a>";
+          "/5<br>" + "<a href=" + ratingURL + jsonObject['profID'] + " target='_blank' >View Ratings on RateMyProfessors.com</a>";
   
       }else if(avgProfRating >= 2.5 && avgProfRating <= 3.3){
   
         return "<img src=" + chrome.extension.getURL('./assets/rmp-average.jpg') +
         "><br><b>Overall Rating: </b>" + jsonObject['avgRating'] + "/5 based on " + 
         jsonObject['totalRatings'] + " ratings. <br><b>Difficulty: </b>" + jsonObject['profHardness'] +
-         "/5<br>" + "<a href=" + ratingURL + jsonObject['profID'] + ">View Ratings on RateMyProfessors.com</a>";
+         "/5<br>" + "<a href=" + ratingURL + jsonObject['profID'] + " target='_blank'>View Ratings on RateMyProfessors.com</a>";
       }else if(avgProfRating <= 2.4){
   
         return "<img src=" + chrome.extension.getURL('./assets/rmp-poor.jpg') +
         "><br><b>Overall Rating: </b>" + jsonObject['avgRating'] + "/5 based on " + 
         jsonObject['totalRatings'] + " ratings. <br><b>Difficulty: </b>" + jsonObject['profHardness'] +
-         "/5<br>" + "<a href=" + ratingURL + jsonObject['profID'] + ">View Ratings on RateMyProfessors.com</a>";
+         "/5<br>" + "<a href=" + ratingURL + jsonObject['profID'] + " target='_blank'>View Ratings on RateMyProfessors.com</a>";
       }
     }else{
       return "<img src=" + chrome.extension.getURL('./assets/rmp-zero.jpg') + "><br><b>Overall Rating: </b>No ratings were found <br><b>Difficulty:</b> No ratings were found ";

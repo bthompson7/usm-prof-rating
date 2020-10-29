@@ -1,8 +1,6 @@
 
 /*
-
 Gets a list of professor names from https://usm.maine.edu/courses
-
 */
 
 "use strict";
@@ -11,6 +9,8 @@ getProfNamesFromUSM();
 
 function getProfNamesFromUSM(){
     console.log("USM Course Search")
+
+
 
 var listOfNames = document.getElementsByClassName("instructor-link section-item");
 console.log(listOfNames);
@@ -49,7 +49,7 @@ for(var i =0; i < listOfNames.length; i++){
             }
            
     }catch(err){
-        console.error("No professor exists for this class");
+        console.error(err.message);
     }
 }//for loop
 }else{
@@ -83,7 +83,7 @@ function injectHTML(splitName,tag,collegeName){
 
     var rating = "";
     if(!localStorage[splitName[0] + " " + splitName[splitName.length - 1]]){ //data doesn't exist in cache
-        getProfRating(splitName[0],splitName[splitName.length - 1],collegeName,tag);
+    searchForProfessor(splitName[0],splitName[splitName.length - 1],collegeName,tag);
     }else{ 
 
         rating = localStorage[splitName[0] + " " + splitName[splitName.length - 1]];
@@ -97,7 +97,7 @@ function injectHTML(splitName,tag,collegeName){
             tag.insertAdjacentHTML('afterend', '<div class="rmp-rating">' + jsonToHTML(ratingObject) + '</div>');
         }else{
             console.log("Data is old, getting new data from the RMP.com api!")
-            getProfRating(splitName[0],splitName[splitName.length - 1],collegeName,tag);  
+            searchForProfessor(splitName[0],splitName[splitName.length - 1],collegeName,tag);  
         }
     }
 
