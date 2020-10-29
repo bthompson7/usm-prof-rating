@@ -7,9 +7,6 @@ Search for a professor using data from RateMyProfessor
 
 var fullURL = "https://intense-fjord-93634.herokuapp.com/https://search-production.ratemyprofessors.com/solr/rmp/select/?solrformat=true&rows=2&wt=json&q=";
 
-var foundProfessorAfterSearch = false;
-
-
 function searchForProfessor(firstName,lastName,university,nameTag){
 var query = `${fullURL} + ${firstName}+${lastName}+${university}`;
 
@@ -31,15 +28,6 @@ const Http = new XMLHttpRequest();
          }else{ //search using last name
           searchUsingLastName(firstName,lastName,university,nameTag);
 
-          if(!foundProfessorAfterSearch){ //we didn't find the professor
-            var lastUpdated = getCurrentUnixTime();
-            var noProfFound = {'foundProf':false,'avgRating':'No ratings found','profHardness':'No ratings found', "lastUpdated":lastUpdated};
-            var htmlToInsert = jsonToHTML(noProfFound);
-            nameTag.insertAdjacentHTML('afterend', '<div class="rmp-rating">' + htmlToInsert +  '</div>');
-            if(!localStorage.getItem(firstName + " " + lastName)){
-              localStorage.setItem(firstName + " " + lastName,JSON.stringify(noProfFound));
-            }
-          }
          }
 
         
@@ -52,13 +40,14 @@ const Http = new XMLHttpRequest();
 
 /*
 
-If we can't find the professor we try the last  name then check the department to make sure it matches the current subject we are in
+If we can't find the professor we try the last name 
+then check the department to make sure it matches the current subject we are in
 
 */
 function searchUsingLastName(firstName,lastName,university,nameTag){
 
   if(university === "Maine"){
-    var currentSubjectElement = document.getElementById("umsCS_Subject-5f9a32cdab8c0");
+    var currentSubjectElement = document.getElementsByTagName('select')[2];
     var currentSubject = currentSubjectElement.value.substring(0, 3);
     var fullSubjectName = getCourse(currentSubject);
 
@@ -87,16 +76,24 @@ function searchUsingLastName(firstName,lastName,university,nameTag){
             if(ratingData['foundProf'] && ratingData['department'] === fullSubjectName){
               var htmlToInsert = jsonToHTML(ratingData);
 
-              foundProfessorAfterSearch = true;
               nameTag.insertAdjacentHTML('afterend', '<div class="rmp-rating">' + htmlToInsert +  '</div>');
               if(!localStorage.getItem(firstName + " " + lastName)){
                 localStorage.setItem(firstName + " " + lastName,JSON.stringify(ratingData));
               }
-              break;
+              return;
             }
           }
 
   
+            //we didnt find the professor
+            var lastUpdated = getCurrentUnixTime();
+            var noProfFound = {'foundProf':false,'avgRating':'No ratings found','profHardness':'No ratings found', "lastUpdated":lastUpdated};
+            var htmlToInsert = jsonToHTML(noProfFound);
+            nameTag.insertAdjacentHTML('afterend', '<div class="rmp-rating">' + htmlToInsert +  '</div>');
+            if(!localStorage.getItem(firstName + " " + lastName)){
+              localStorage.setItem(firstName + " " + lastName,JSON.stringify(noProfFound));
+            }
+          
          }
 
 
@@ -120,6 +117,7 @@ function parseDataFromRMP(jsonData){
     var department = data['response']['docs'][0]['teacherdepartment_s']
     var lastUpdated = getCurrentUnixTime();
 
+    //this is because sometimes the professor exists but has no ratings
     if(avgRating === null){
       var noProfFound = {'foundProf':false,'avgRating':'No ratings found',
      'profHardness':'No ratings found', "lastUpdated":lastUpdated};
