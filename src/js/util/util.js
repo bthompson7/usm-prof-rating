@@ -30,6 +30,7 @@ This will get updated as I find them.
 let courses = new Map();
 courses.set("BIO","Biology")
 courses.set("CHY","Chemistry")
+courses.set("MAT","Mathematics")
 
 /*
 
@@ -48,12 +49,33 @@ function fullNameToNick(name){
 
 /*
 
+Keep a list of professors who we need to lookup using their last  name
+
+*/
+let profDepartments = new Map();
+profDepartments.set("Levine","Biology")
+
+/*
+
 Lookup a course
 
 */
 function getCourse(courseName){
     if(courses.get(courseName) !== undefined){
         return courses.get(courseName);
+    }else{
+        return null;
+    }
+}
+
+/*
+
+Lookup a prfoessors department
+
+*/
+function getProfDepartment(profName){
+    if(profDepartments.get(profName) !== undefined){
+        return profDepartments.get(profName);
     }else{
         return null;
     }

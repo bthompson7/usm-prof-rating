@@ -52,9 +52,16 @@ function searchUsingLastName(firstName,lastName,university,nameTag){
     var fullSubjectName = getCourse(currentSubject);
 
   }else{
-    var currentSubjectElement = document.getElementById("edit-subject");
-    var currentSubject = currentSubjectElement.value;
-    var fullSubjectName = getCourse(currentSubject);
+    try{
+      var currentSubjectElement = document.getElementById("edit-subject");
+      var currentSubject = currentSubjectElement.value;
+      var department = getCourse(currentSubject);
+    
+    }catch(err){
+      var department = getProfDepartment(lastName);
+    }
+      
+
 
   }
 
@@ -73,7 +80,7 @@ function searchUsingLastName(firstName,lastName,university,nameTag){
           for(var i=0; i < data['response']['numFound']; i++){
             var ratingData = parseDataFromRMP(Http.response);
 
-            if(ratingData['foundProf'] && ratingData['department'] === fullSubjectName){
+            if(ratingData['foundProf'] && ratingData['department'] === department){
               var htmlToInsert = jsonToHTML(ratingData);
 
               nameTag.insertAdjacentHTML('afterend', '<div class="rmp-rating">' + htmlToInsert +  '</div>');
