@@ -3,6 +3,10 @@
     "short_name": "UMS RMP",
     "description": "Displays the professors rating from RateMyProfessors.com on the USM and UMaine course search page for easy access.",
     "version": "1.1.0",
+    "background": {
+      "scripts": ["src/js/background_scripts/background.js"],
+      "persistent": false
+      },
   
     "content_scripts": 
       [
@@ -10,13 +14,19 @@
           {
               "matches":["https://*.umaine.edu/*"],
               "css":["src/css/extension.css"],
-              "js":["src/js/util/util.js","src/js/getDataFromRMP.js","src/js/UMaine.js"],
+              "js":["src/js/util/util.js","src/js/content_scripts/getDataFromRMP.js","src/js/content_scripts/UMaine.js"],
               "run_at": "document_end"
           },
           {
               "matches":["https://usm.maine.edu/*"],
               "css":["src/css/extension.css"],
-              "js":["src/js/util/util.js","src/js/getDataFromRMP.js","src/js/USM.js"],
+              "js":["src/js/util/util.js","src/js/content_scripts/getDataFromRMP.js","src/js/content_scripts/USM.js"],
+              "run_at": "document_end"
+          },
+          {
+              "matches":["https://mainestreetcs.maine.edu/*"],
+              "css":["src/css/extension.css"],
+              "js":["src/js/util/util.js","src/js/content_scripts/getDataFromRMP.js","src/js/content_scripts/Mainestreet.js"],
               "run_at": "document_end"
           }
       ],
