@@ -1,0 +1,10 @@
+v1.0.0
+-Inital release
+
+v1.1.0
+-improved professor search algorithm
+-bug fixes
+
+v1.2.0(Currently in Testing)
+-added support for mainestreet class searching
+-bug fixes
