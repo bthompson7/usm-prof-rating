@@ -1,5 +1,7 @@
 # UMaine System Professor Ratings
 
+### About
+
 A Chrome extension that displays the professors rating from RateMyProfessors.com on the USM and UMaine course search pages.
 
 ### Install
