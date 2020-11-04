@@ -22,9 +22,10 @@ const Http = new XMLHttpRequest();
           var htmlToInsert = jsonToHTML(ratingData);
 
           nameTag.insertAdjacentHTML('afterend', '<div class="rmp-rating">' + htmlToInsert +  '</div>');
-          if(!localStorage.getItem(firstName + " " + lastName)){
-            localStorage.setItem(firstName + " " + lastName,JSON.stringify(ratingData));
-          }
+
+              if(!localStorage.getItem(firstName + " " + lastName)){
+                localStorage.setItem(firstName + " " + lastName,JSON.stringify(ratingData));
+                }
          }else{ //search using last name
           searchUsingLastName(firstName,lastName,university,nameTag);
 
@@ -46,6 +47,7 @@ then check the department to make sure it matches the current subject we are in
 */
 function searchUsingLastName(firstName,lastName,university,nameTag){
 
+
   if(university === "Maine"){
     var currentSubjectElement = document.getElementsByTagName('select')[2];
     var currentSubject = currentSubjectElement.value.substring(0, 3);
@@ -53,9 +55,21 @@ function searchUsingLastName(firstName,lastName,university,nameTag){
 
   }else{
     try{
-      var currentSubjectElement = document.getElementById("edit-subject");
-      var currentSubject = currentSubjectElement.value;
-      var department = getCourse(currentSubject);
+
+      if(window.location.href.includes('https://mainestreetcs.maine.edu/')){
+
+        var iframe = document.querySelector("#ptifrmtgtframe");
+        var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+        var currentSubjectElement = innerDoc.querySelector("#win0divDERIVED_CLSRCH_SSR_CLSRCH_CRIT > div > table > tbody > tr > td > strong:nth-child(1)");
+        var department = currentSubjectElement.innerHTML;
+
+      }else{
+        var currentSubjectElement = document.getElementById("edit-subject");
+        var currentSubject = currentSubjectElement.value;
+        var department = getCourse(currentSubject);
+      }
+      
+
     
     }catch(err){
       var department = getProfDepartment(lastName);
@@ -84,6 +98,7 @@ function searchUsingLastName(firstName,lastName,university,nameTag){
               var htmlToInsert = jsonToHTML(ratingData);
 
               nameTag.insertAdjacentHTML('afterend', '<div class="rmp-rating">' + htmlToInsert +  '</div>');
+         
               if(!localStorage.getItem(firstName + " " + lastName)){
                 localStorage.setItem(firstName + " " + lastName,JSON.stringify(ratingData));
               }

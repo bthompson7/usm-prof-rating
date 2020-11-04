@@ -53,7 +53,7 @@ Keep a list of professors who we need to lookup using their last  name
 
 */
 let profDepartments = new Map();
-profDepartments.set("Levine","Biology")
+profDepartments.set("Levine","Biology");
 
 /*
 
