@@ -15,14 +15,14 @@ new MutationObserver(function(mutations) {
                         var dummyElement = innerDoc.querySelector("#RMP-DUMMY-ELEMENT")
 
                         if(innerDoc.querySelector("#MTG_INSTR\\$0") && dummyElement == null){
+                            
                             var numOfProfessors = innerDoc.querySelectorAll("[id^=MTG_INSTR]");
 
                             for(var i =0; i < numOfProfessors.length; i++){
-                                var element = innerDoc.querySelectorAll("[class^=rmp-rating]");
-                                var currElement = numOfProfessors[i];
-                                var professorName = currElement.innerHTML;
-                                var splitName = professorName.split(" ");
-                                searchForProfessor(splitName[0],splitName[splitName.length - 1],collegeName,currElement); 
+                                   var currElement = numOfProfessors[i];
+                                   var professorName = currElement.innerHTML;
+                                   var splitName = professorName.split(" ");
+                                   searchForProfessor(splitName[0],splitName[splitName.length - 1],collegeName,currElement); 
                             }
 
                             titleElement.insertAdjacentHTML('afterend', '<p id="RMP-DUMMY-ELEMENT">..</p>');
