@@ -22,7 +22,7 @@ const Http = new XMLHttpRequest();
               //rating doesn't exist
               if(!localStorage.getItem(firstName + " " + lastName)){
                 localStorage.setItem(firstName + " " + lastName,JSON.stringify(ratingData));
-                nameTag.insertAdjacentHTML('afterend', '<div class="rmp-rating">' + jsonToHTML(ratingObject) + '</div>');
+                nameTag.insertAdjacentHTML('afterend', '<div class="rmp-rating">' + jsonToHTML(ratingData) + '</div>');
               }else{ //rating exists, check if we need to update the ratings
 
                  if(getCurrentUnixTime() - ratingData['lastUpdated'] < getOneWeekInUnixTime()){

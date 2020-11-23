@@ -1,4 +1,4 @@
-var collegeName = "University+of+Southern+Maine"
+var collegeName = "Maine+University"
 
 new MutationObserver(function(mutations) {
 
