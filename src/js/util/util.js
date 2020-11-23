@@ -197,3 +197,34 @@ function jsonToHTML(jsonObject){
     }
   
   }
+
+
+
+
+
+
+  function searchIfNeeded(splitName,tag,collegeName){
+
+
+    var rating = "";
+
+     //data doesn't exist in cache
+    if(!localStorage[splitName[0] + " " + splitName[splitName.length - 1]]){
+    searchForProfessor(splitName[0],splitName[splitName.length - 1],collegeName,tag);
+
+    //data exists check if we need to update it
+    }else{ 
+        rating = localStorage[splitName[0] + " " + splitName[splitName.length - 1]];
+        var ratingObject = JSON.parse(rating);
+
+
+        //check if we need to refresh the ratings
+        if(getCurrentUnixTime() - ratingObject['lastUpdated'] < getOneWeekInUnixTime()){
+            tag.insertAdjacentHTML('afterend', '<div class="rmp-rating">' + jsonToHTML(ratingObject) + '</div>');
+        }else{
+            console.log("Data is old, getting new data from the RMP.com api!")
+            localStorage.removeItem(splitName[0] + " " + splitName[splitName.length - 1])
+            searchForProfessor(splitName[0],splitName[splitName.length - 1],collegeName,tag);  
+        }
+    }
+}

@@ -25,8 +25,9 @@ function getProfNamesFromUMaine(){
                     console.log(professorName);
                     var nameTag = listOfNames[i].getElementsByTagName('a')[j];           
                     var splitName = professorName.split(" ");
+                    
                     //use rating from localStorage if possible to reduce the number of calls to CORS Proxy/RMP
-                    injectHTML(splitName,nameTag,collegeName); 
+                    searchIfNeeded(splitName,nameTag,collegeName); 
                 }
             }else if(numOfProfs > 1){
                 for(var j = 0; j <= numOfProfs; j++){
@@ -37,8 +38,9 @@ function getProfNamesFromUMaine(){
                     console.log(professorName);
                     var nameTag = listOfNames[i].getElementsByTagName('a')[j];           
                     var splitName = professorName.split(" ");
+
                     //use rating from localStorage if possible to reduce the number of calls to CORS Proxy/RMP
-                    injectHTML(splitName,nameTag,collegeName); 
+                    searchIfNeeded(splitName,nameTag,collegeName); 
                     
                     }
 
@@ -48,28 +50,5 @@ function getProfNamesFromUMaine(){
                 console.error(err);
             }
         }
-    }
-
-
-}
-
-
-function injectHTML(splitName,tag,collegeName){
-    var rating = "";
-    if(!localStorage[splitName[0] + " " + splitName[splitName.length - 1]]){
-        searchForProfessor(splitName[0],splitName[splitName.length - 1],collegeName,tag);
-    }else{
-        rating = localStorage[splitName[0] + " " + splitName[splitName.length - 1]];
-        var ratingObject = JSON.parse(rating);
-
-        //check if we need to refresh the ratings
-        if(getCurrentUnixTime() - ratingObject['lastUpdated'] < getOneWeekInUnixTime()){
-            tag.insertAdjacentHTML('afterend', '<div class="rmp-rating">' + jsonToHTML(ratingObject) + '</div>');
-        }else{
-            console.log("Data is old, getting new data from the RMP.com api!")
-            searchForProfessor(splitName[0],splitName[splitName.length - 1],collegeName,tag);  
-        }
-
-
     }
 }

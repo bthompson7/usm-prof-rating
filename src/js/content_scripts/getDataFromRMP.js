@@ -18,13 +18,25 @@ const Http = new XMLHttpRequest();
          var ratingData = parseDataFromRMP(Http.response);
 
          if(ratingData['foundProf']){
-          var htmlToInsert = jsonToHTML(ratingData);
 
-          nameTag.insertAdjacentHTML('afterend', '<div class="rmp-rating">' + htmlToInsert +  '</div>');
-
+              //rating doesn't exist
               if(!localStorage.getItem(firstName + " " + lastName)){
                 localStorage.setItem(firstName + " " + lastName,JSON.stringify(ratingData));
+                nameTag.insertAdjacentHTML('afterend', '<div class="rmp-rating">' + jsonToHTML(ratingObject) + '</div>');
+              }else{ //rating exists, check if we need to update the ratings
+
+                 if(getCurrentUnixTime() - ratingData['lastUpdated'] < getOneWeekInUnixTime()){
+                  nameTag.insertAdjacentHTML('afterend', '<div class="rmp-rating">' + jsonToHTML(ratingData) + '</div>');
+                 }else{
+                   console.log("Data is old, getting new data from the RMP.com api!")
+                   localStorage.removeItem(splitName[0] + " " + splitName[splitName.length - 1])
+                  searchForProfessor(splitName[0],splitName[splitName.length - 1],collegeName,tag);  
+                 }
+
+
                 }
+
+
          }else{ //search using last name
           searchUsingLastName(firstName,lastName,university,nameTag);
 

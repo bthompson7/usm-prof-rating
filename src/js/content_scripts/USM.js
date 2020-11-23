@@ -13,7 +13,6 @@ function getProfNamesFromUSM(){
 
 
 var listOfNames = document.getElementsByClassName("instructor-link section-item");
-console.log(listOfNames);
 
 var collegeName = "University+of+Southern+Maine"
 
@@ -30,7 +29,7 @@ for(var i =0; i < listOfNames.length; i++){
                     var splitName = professorName.split(" ");
                     
                     //use rating from localStorage if possible to reduce the number of calls to CORS Proxy/RMP
-                    injectHTML(splitName,nameTag,collegeName); 
+                    searchIfNeeded(splitName,nameTag,collegeName); 
                 }
             }else if(numOfProfs > 1){
                 for(var j = 0; j <= numOfProfs; j++){
@@ -41,7 +40,7 @@ for(var i =0; i < listOfNames.length; i++){
                     var splitName = professorName.split(" ");
                     
                     //use rating from localStorage if possible to reduce the number of calls to CORS Proxy/RMP
-                    injectHTML(splitName,nameTag,collegeName); 
+                    searchIfNeeded(splitName,nameTag,collegeName); 
                     
                     }
 
@@ -72,36 +71,8 @@ function getSingleUSMProfName(profName,collegeName){
       
       //use rating from localStorage if possible to reduce the number of calls to CORS Proxy/RMP
       var insertAfter = document.querySelector("#content-area > div > div > article > div.profile-name-title-container > div");
-      injectHTML(splitName,insertAfter,collegeName);
+      searchIfNeeded(splitName,insertAfter,collegeName);
 
 
 }
 
-
-function injectHTML(splitName,tag,collegeName){
-
-
-    var rating = "";
-    if(!localStorage[splitName[0] + " " + splitName[splitName.length - 1]]){ //data doesn't exist in cache
-    searchForProfessor(splitName[0],splitName[splitName.length - 1],collegeName,tag);
-    }else{ 
-
-        rating = localStorage[splitName[0] + " " + splitName[splitName.length - 1]];
-
-        
-        var ratingObject = JSON.parse(rating);
-
-
-        //check if we need to refresh the ratings
-        if(getCurrentUnixTime() - ratingObject['lastUpdated'] < getOneWeekInUnixTime()){
-            tag.insertAdjacentHTML('afterend', '<div class="rmp-rating">' + jsonToHTML(ratingObject) + '</div>');
-        }else{
-            console.log("Data is old, getting new data from the RMP.com api!")
-            searchForProfessor(splitName[0],splitName[splitName.length - 1],collegeName,tag);  
-        }
-    }
-
-
-
-
-}

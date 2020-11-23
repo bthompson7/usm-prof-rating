@@ -26,7 +26,7 @@ new MutationObserver(function(mutations) {
                                    var currElement = numOfProfessors[i];
                                    var professorName = currElement.innerHTML;
                                    var splitName = professorName.split(" ");
-                                   searchForProfessor(splitName[0],splitName[splitName.length - 1],collegeName,currElement); 
+                                   searchIfNeeded(splitName,currElement,collegeName);
                             }
 
                             titleElement.insertAdjacentHTML('afterend', '<p id="RMP-DUMMY-ELEMENT">..</p>');
