@@ -1,5 +1,3 @@
-//watch mainstreet for elements that appear
-//currently this gets the first professor in the course list
 var collegeName = "University+of+Southern+Maine"
 
 new MutationObserver(function(mutations) {
@@ -12,6 +10,12 @@ new MutationObserver(function(mutations) {
                         var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
 
                         var titleElement = innerDoc.querySelector("#DERIVED_REGFRM1_UM_TITLE1")
+
+                        /*
+                        this is a dummy element we inject so we know to stop searching for professors
+                        when this element appears on the page
+                        it's a bit of a hack but it works so whatever
+                        */
                         var dummyElement = innerDoc.querySelector("#RMP-DUMMY-ELEMENT")
 
                         if(innerDoc.querySelector("#MTG_INSTR\\$0") && dummyElement == null){

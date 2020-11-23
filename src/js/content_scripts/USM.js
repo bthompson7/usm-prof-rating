@@ -37,10 +37,9 @@ for(var i =0; i < listOfNames.length; i++){
                     var professorName = listOfNames[i].getElementsByTagName('a')[j].innerHTML;
 
                     if(!professorName.includes("View Ratings on RateMyProfessors.com")){
-
-                    console.log(professorName);
                     var nameTag = listOfNames[i].getElementsByTagName('a')[j];           
                     var splitName = professorName.split(" ");
+                    
                     //use rating from localStorage if possible to reduce the number of calls to CORS Proxy/RMP
                     injectHTML(splitName,nameTag,collegeName); 
                     

@@ -36,7 +36,6 @@ courses.set("MAT","Mathematics")
 
 Convert a full name to a nickname 
 
-
 */
 
 function fullNameToNick(name){
@@ -52,6 +51,7 @@ function fullNameToNick(name){
 Keep a list of professors who we need to lookup using their last  name
 
 */
+
 let profDepartments = new Map();
 profDepartments.set("Levine","Biology");
 
@@ -60,6 +60,7 @@ profDepartments.set("Levine","Biology");
 Lookup a course
 
 */
+
 function getCourse(courseName){
     if(courses.get(courseName) !== undefined){
         return courses.get(courseName);
@@ -73,6 +74,7 @@ function getCourse(courseName){
 Lookup a prfoessors department
 
 */
+
 function getProfDepartment(profName){
     if(profDepartments.get(profName) !== undefined){
         return profDepartments.get(profName);
@@ -86,6 +88,7 @@ function getProfDepartment(profName){
 Get 1 week in unix time
 
 */
+
 function getOneWeekInUnixTime(){
     return 518400;
 }
@@ -95,6 +98,7 @@ function getOneWeekInUnixTime(){
 Get the current unix time
 
 */
+
 function getCurrentUnixTime(){
     return Math.floor(Date.now() / 1000);
 }
@@ -170,26 +174,26 @@ function jsonToHTML(jsonObject){
       var avgProfRating = jsonObject['avgRating'];
   
       if(avgProfRating >= 3.4){
-        return "<img id='rmp-img' src=" + chrome.extension.getURL('./assets/rmp-good.jpg') +
+        return "<img id='rmp-img' src=" + chrome.extension.getURL('assets/rmp-good.jpg') +
          "><br><b>Overall Rating: </b>" + jsonObject['avgRating'] + "/5 based on " + 
          jsonObject['totalRatings'] + " ratings. <br><b>Difficulty: </b>" + jsonObject['profHardness'] +
           "/5<br>" + "<a href=" + ratingURL + jsonObject['profID'] + " target='_blank' >View Ratings on RateMyProfessors.com</a>";
   
       }else if(avgProfRating >= 2.5 && avgProfRating <= 3.3){
   
-        return "<img id='rmp-img' src=" + chrome.extension.getURL('./assets/rmp-average.jpg') +
+        return "<img id='rmp-img' src=" + chrome.extension.getURL('assets/rmp-average.jpg') +
         "><br><b>Overall Rating: </b>" + jsonObject['avgRating'] + "/5 based on " + 
         jsonObject['totalRatings'] + " ratings. <br><b>Difficulty: </b>" + jsonObject['profHardness'] +
          "/5<br>" + "<a href=" + ratingURL + jsonObject['profID'] + " target='_blank'>View Ratings on RateMyProfessors.com</a>";
       }else if(avgProfRating <= 2.4){
   
-        return "<img id='rmp-img' src=" + chrome.extension.getURL('./assets/rmp-poor.jpg') +
+        return "<img id='rmp-img' src=" + chrome.extension.getURL('assets/rmp-poor.jpg') +
         "><br><b>Overall Rating: </b>" + jsonObject['avgRating'] + "/5 based on " + 
         jsonObject['totalRatings'] + " ratings. <br><b>Difficulty: </b>" + jsonObject['profHardness'] +
          "/5<br>" + "<a href=" + ratingURL + jsonObject['profID'] + " target='_blank'>View Ratings on RateMyProfessors.com</a>";
       }
     }else{
-      return "<img id='rmp-img' src=" + chrome.extension.getURL('./assets/rmp-zero.jpg') + "><br><b>Overall Rating: </b>No ratings were found <br><b>Difficulty:</b> No ratings were found ";
+      return "<img id='rmp-img' src=" + chrome.extension.getURL('assets/rmp-zero.jpg') + "><br><b>Overall Rating: </b>No ratings were found <br><b>Difficulty:</b> No ratings were found ";
     }
   
   }

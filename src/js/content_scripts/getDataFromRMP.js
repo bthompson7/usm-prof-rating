@@ -2,7 +2,6 @@
 
 Search for a professor using data from RateMyProfessor
 
-
 */
 
 var fullURL = "https://intense-fjord-93634.herokuapp.com/https://search-production.ratemyprofessors.com/solr/rmp/select/?solrformat=true&rows=2&wt=json&q=";
