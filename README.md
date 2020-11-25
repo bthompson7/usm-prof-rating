@@ -11,7 +11,7 @@ A Chrome extension that displays the professors rating from RateMyProfessors.com
  ### University of Southern Maine
  Has support for the following sites:
  - https://usm.maine.edu/courses
- - Mainestreet (coming soon!)
+ - MaineStreet (coming soon!)
  
 ![Screenshot from 2020-10-26 12-32-35](https://user-images.githubusercontent.com/35780502/97200493-aae39f00-1787-11eb-9c17-948b6ad290ae.png)
 
@@ -23,7 +23,7 @@ A Chrome extension that displays the professors rating from RateMyProfessors.com
  Has support for the following sites:
  - https://online.umaine.edu/how-to-search-for-courses/ 
  - https://online.umaine.edu/course-search
- - Mainestreet (coming soon!)
+ - MaineStreet (coming soon!)
 
 ![Screenshot from 2020-10-26 12-34-21](https://user-images.githubusercontent.com/35780502/97200553-bcc54200-1787-11eb-8b20-d9f4224ae37a.png)
 
