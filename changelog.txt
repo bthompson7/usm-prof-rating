@@ -1,5 +1,5 @@
 v1.0.0
--Inital release
+-Initial release
 
 v1.1.0
 -improved professor search algorithm
