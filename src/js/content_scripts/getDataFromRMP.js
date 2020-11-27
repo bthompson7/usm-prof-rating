@@ -8,12 +8,11 @@ Search for a professor using data from RateMyProfessor
 var fullURL = "https://intense-fjord-93634.herokuapp.com/https://search-production.ratemyprofessors.com/solr/rmp/select/?solrformat=true&rows=2&wt=json&q=";
 
 function searchForProfessor(firstName,lastName,university,nameTag){
-var query = `${fullURL} + ${firstName}+${lastName}+${university}`;
 
+var findProfessorURL = `${fullURL} + ${firstName}+${lastName}+${university}`;
 const Http = new XMLHttpRequest();
 
-  Http.open("GET", query, true);
-  
+  Http.open("GET", findProfessorURL);
   Http.onreadystatechange = (e) => {
        if(Http.status == 200 && Http.readyState == 4){
          var ratingData = parseDataFromRMP(Http.response);
@@ -32,21 +31,14 @@ const Http = new XMLHttpRequest();
                    console.log("Data is old, getting new data from the RMP.com api!")
                    localStorage.removeItem(splitName[0] + " " + splitName[splitName.length - 1])
                   searchForProfessor(splitName[0],splitName[splitName.length - 1],collegeName,tag);  
+
                  }
-
-
                 }
-
-
          }else{ //search using last name
           searchUsingLastName(firstName,lastName,university,nameTag);
-
          }
-
-        
        }
       }
-
   Http.send();  
 }
 
@@ -92,15 +84,16 @@ function searchUsingLastName(firstName,lastName,university,nameTag){
   }
 
 
-  var query2 = `${fullURL} + ${lastName}+${university}`;
+  var lastNameURL = `${fullURL} + ${lastName}+${university}`;
 
   const Http = new XMLHttpRequest();
   
-    Http.open("GET", query2, true);
+    Http.open("GET", lastNameURL);
     
     Http.onreadystatechange = (e) => {
          if(Http.status == 200 && Http.readyState == 4){
 
+          //parse data to get the number of results found
           var data = JSON.parse(Http.response);
 
           for(var i=0; i < data['response']['numFound']; i++){
@@ -118,7 +111,6 @@ function searchUsingLastName(firstName,lastName,university,nameTag){
             }
           }
 
-  
             //we didnt find the professor
             var lastUpdated = getCurrentUnixTime();
             var noProfFound = {'foundProf':false,'avgRating':'No ratings found','profHardness':'No ratings found', "lastUpdated":lastUpdated};
@@ -127,18 +119,11 @@ function searchUsingLastName(firstName,lastName,university,nameTag){
             if(!localStorage.getItem(firstName + " " + lastName)){
               localStorage.setItem(firstName + " " + lastName,JSON.stringify(noProfFound));
             }
-          
          }
-
-
         }
   
     Http.send(); 
-  
-
-
 }
-
 
 function parseDataFromRMP(jsonData){
   try{
