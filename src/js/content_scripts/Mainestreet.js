@@ -1,3 +1,5 @@
+"use strict";
+
 var collegeName = "Maine+University"
 
 new MutationObserver(function(mutations) {
@@ -16,6 +18,7 @@ new MutationObserver(function(mutations) {
                         when this element appears on the page
                         it's a bit of a hack but it works so whatever
                         */
+                       
                         var dummyElement = innerDoc.querySelector("#RMP-DUMMY-ELEMENT")
 
                         if(innerDoc.querySelector("#MTG_INSTR\\$0") && dummyElement == null){
