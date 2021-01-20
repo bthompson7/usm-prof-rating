@@ -6,6 +6,7 @@ new MutationObserver(function(mutations) {
 
             for(let mutation of mutations) {
                 for(let node of mutation.addedNodes) {
+                    
                         //for some reason mainestreet is inside an iframe so we have to do this to get the iframe content
                         //credit: https://stackoverflow.com/questions/1088544/get-element-from-within-an-iframe
                         var iframe = document.querySelector("#ptifrmtgtframe");
@@ -32,6 +33,8 @@ new MutationObserver(function(mutations) {
 
                                    if(splitName[0] !== "&nbsp;"){
                                     searchIfNeeded(splitName,currElement,collegeName);
+
+                                    
                                    }else{
                                        console.log("Name is blank, skipping.")
                                    }

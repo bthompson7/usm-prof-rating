@@ -9,13 +9,13 @@ var fullURL = "https://intense-fjord-93634.herokuapp.com/https://search-producti
 
 function searchForProfessor(firstName,lastName,university,nameTag){
 
-var findProfessorURL = `${fullURL} + ${firstName}+${lastName}+${university}`;
-const Http = new XMLHttpRequest();
+var findProfessorURL = `${fullURL} + ${firstName} + ${lastName} + ${university}`;
+const httpRequest = new XMLHttpRequest();
 
-  Http.open("GET", findProfessorURL);
-  Http.onreadystatechange = (e) => {
-       if(Http.status == 200 && Http.readyState == 4){
-         var ratingData = parseDataFromRMP(Http.response);
+httpRequest.open("GET", findProfessorURL);
+httpRequest.onreadystatechange = (e) => {
+       if(httpRequest.status == 200 && httpRequest.readyState == 4){
+         var ratingData = parseDataFromRMP(httpRequest.response);
 
          if(ratingData['foundProf']){
 
@@ -23,14 +23,17 @@ const Http = new XMLHttpRequest();
               if(!localStorage.getItem(firstName + " " + lastName)){
                 localStorage.setItem(firstName + " " + lastName,JSON.stringify(ratingData));
                 nameTag.insertAdjacentHTML('afterend', '<div class="rmp-rating">' + jsonToHTML(ratingData) + '</div>');
+
               }else{ //rating exists, check if we need to update the ratings
 
                  if(getCurrentUnixTime() - ratingData['lastUpdated'] < getOneWeekInUnixTime()){
                   nameTag.insertAdjacentHTML('afterend', '<div class="rmp-rating">' + jsonToHTML(ratingData) + '</div>');
                  }else{
+
+                  //fetch data from RMP
                    console.log("Data is old, getting new data from the RMP.com api!")
                    localStorage.removeItem(splitName[0] + " " + splitName[splitName.length - 1])
-                  searchForProfessor(splitName[0],splitName[splitName.length - 1],collegeName,tag);  
+                   searchForProfessor(splitName[0],splitName[splitName.length - 1],collegeName,tag);  
 
                  }
                 }
@@ -39,7 +42,7 @@ const Http = new XMLHttpRequest();
          }
        }
       }
-  Http.send();  
+      httpRequest.send();  
 }
 
 
@@ -73,31 +76,25 @@ function searchUsingLastName(firstName,lastName,university,nameTag){
         var department = getCourse(currentSubject);
       }
       
-
-    
     }catch(err){
       var department = getProfDepartment(lastName);
     }
-      
-
-
   }
 
 
   var lastNameURL = `${fullURL} + ${lastName}+${university}`;
 
-  const Http = new XMLHttpRequest();
+  const httpRequest = new XMLHttpRequest();
   
-    Http.open("GET", lastNameURL);
-    
-    Http.onreadystatechange = (e) => {
-         if(Http.status == 200 && Http.readyState == 4){
+  httpRequest.open("GET", lastNameURL);
+  httpRequest.onreadystatechange = (e) => {
+         if(httpRequest.status == 200 && httpRequest.readyState == 4){
 
           //parse data to get the number of results found
-          var data = JSON.parse(Http.response);
+          var data = JSON.parse(httpRequest.response);
 
           for(var i=0; i < data['response']['numFound']; i++){
-            var ratingData = parseDataFromRMP(Http.response);
+            var ratingData = parseDataFromRMP(httpRequest.response);
 
             if(ratingData['foundProf'] && ratingData['department'] === department){
               var htmlToInsert = jsonToHTML(ratingData);
@@ -122,7 +119,7 @@ function searchUsingLastName(firstName,lastName,university,nameTag){
          }
         }
   
-    Http.send(); 
+        httpRequest.send(); 
 }
 
 function parseDataFromRMP(jsonData){

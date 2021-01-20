@@ -3,6 +3,7 @@
 Convert a json object into an html tag to display on the webpage
 
 */
+
 "use strict";
 
 function jsonToHTML(jsonObject){

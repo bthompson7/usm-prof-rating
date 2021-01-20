@@ -9,9 +9,7 @@ getProfNamesFromUSM();
 
 function getProfNamesFromUSM(){
     console.log("USM Course Search")
-
-
-
+    
 var listOfNames = document.getElementsByClassName("instructor-link section-item");
 
 var collegeName = "University+of+Southern+Maine"
@@ -27,9 +25,10 @@ for(var i =0; i < listOfNames.length; i++){
                     console.log(professorName);
                     var nameTag = listOfNames[i].getElementsByTagName('a')[j];           
                     var splitName = professorName.split(" ");
-                    
+
                     //use rating from localStorage if possible to reduce the number of calls to CORS Proxy/RMP
                     searchIfNeeded(splitName,nameTag,collegeName); 
+
                 }
             }else if(numOfProfs > 1){
                 for(var j = 0; j <= numOfProfs; j++){
@@ -38,7 +37,7 @@ for(var i =0; i < listOfNames.length; i++){
                     if(!professorName.includes("View Ratings on RateMyProfessors.com")){
                     var nameTag = listOfNames[i].getElementsByTagName('a')[j];           
                     var splitName = professorName.split(" ");
-                    
+
                     //use rating from localStorage if possible to reduce the number of calls to CORS Proxy/RMP
                     searchIfNeeded(splitName,nameTag,collegeName); 
                     
@@ -50,7 +49,17 @@ for(var i =0; i < listOfNames.length; i++){
     }catch(err){
         console.error(err.message);
     }
-}//for loop
+}//for loop ending
+
+//remove all loading messages from the page
+var loadingMessages = document.getElementsByClassName("loading-msg");
+console.log(loadingMessages.length);
+
+while(loadingMessages.length > 0){
+    loadingMessages[0].remove(); 
+}
+
+
 }else{
     var profName = document.querySelector("#content-area > div > div > article > div.profile-name-title-container > h2");
     getSingleUSMProfName(profName,collegeName);

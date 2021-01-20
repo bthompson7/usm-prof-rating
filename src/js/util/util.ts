@@ -4,16 +4,13 @@ Contains useful functions that are shared between different scripts
 
 */
 
-"use strict";
-
-const titles = ['PhD','Ph.D.','MSN','RN', 'APRN-BC','CPNP-PC',
+const titles:string[] = ['PhD','Ph.D.','MSN','RN', 'APRN-BC','CPNP-PC',
 'FNAP','MS','BS','AGACNP-BC','DNP','MSN','Chairman',
 'Chairwoman','Chairperson','M.D.','CNE','BSN','DNSc,','M.S.',
 'MS','M.A.','MA','RN-BC','MBA','NP-C','CCRN','AGPCNP-BC','APRN','PMH-NP',
 'CHSOS','MPH','Chair','Dean','President','Associate Dean','V.M.D.','FAANP','FNP-BC'];
 
-//Maps Nick Name => Full Name
-let names = new Map();
+let names = new Map<string,string>();
 names.set('Tim','Timothy');
 names.set('Bob','Robert');
 
@@ -34,25 +31,11 @@ courses.set("MAT","Mathematics")
 
 /*
 
-Convert a full name to a nickname 
-
-*/
-
-function fullNameToNick(name){
-    if(nickNames.get(name) !== undefined){
-        return nickNames.get(name);
-    }else{
-        return null;
-    }
-}
-
-/*
-
 Keep a list of professors who we need to lookup using their last  name
 
 */
 
-let profDepartments = new Map();
+let profDepartments = new Map<string, string>();
 profDepartments.set("Levine","Biology");
 
 /*
@@ -61,12 +44,8 @@ Lookup a course
 
 */
 
-function getCourse(courseName){
-    if(courses.get(courseName) !== undefined){
-        return courses.get(courseName);
-    }else{
-        return null;
-    }
+function getCourse(courseName: string){
+    return courses.get(courseName);
 }
 
 /*
@@ -75,12 +54,9 @@ Lookup a prfoessors department
 
 */
 
-function getProfDepartment(profName){
-    if(profDepartments.get(profName) !== undefined){
-        return profDepartments.get(profName);
-    }else{
-        return null;
-    }
+function getProfDepartment(profName: string){
+    return profDepartments.get(profName);
+
 }
 
 /*
@@ -105,15 +81,16 @@ function getCurrentUnixTime(){
 
 /*
 
-Removes extra words/titles from a persons name
+Removes extra words/titles from a persons name. This makes it easy to lookup a persons name
 
 For example:
+
 Shelton Waldrep, Chair => Shelton Waldrep
 Brenda Petersen PhD, MSN, RN, APRN-BC, CPNP-PC => Brenda Petersen
 
 */
 
-function removeTitlesFromName(profNameList){
+function removeTitlesFromName(profNameList: string[]){
 for(var i = profNameList.length - 1; i > 0; i--){
     for(var j =0; j < titles.length; j++){
         var name = profNameList[i]
@@ -136,12 +113,10 @@ Return the fullname based on the nickname given
 
 */
 
-function nickNameToFull(name){
-    if(names.get(name) !== undefined){
-        return names.get(name);
-    }else{
-        return null;
-    }
+function nickNameToFull(name: string){
+
+    return names.get(name);
+
 }
 
 
@@ -150,17 +125,14 @@ Round the number to 1 decimal point
 
 */
 
-function roundNumber(num){
-    if(num === undefined){
-        return null;
-    }
+function roundNumber(num: number){
     return Math.round(num * 10) / 10;
 
 
 }
 
 
-  function searchIfNeeded(splitName,tag,collegeName){
+  function searchIfNeeded(splitName: string,tag: HTMLElement, collegeName: string){
 
 
     var rating = "";

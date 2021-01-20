@@ -25,9 +25,10 @@ function getProfNamesFromUMaine(){
                     console.log(professorName);
                     var nameTag = listOfNames[i].getElementsByTagName('a')[j];           
                     var splitName = professorName.split(" ");
-                    
+
                     //use rating from localStorage if possible to reduce the number of calls to CORS Proxy/RMP
                     searchIfNeeded(splitName,nameTag,collegeName); 
+
                 }
             }else if(numOfProfs > 1){
                 for(var j = 0; j <= numOfProfs; j++){
@@ -41,7 +42,7 @@ function getProfNamesFromUMaine(){
 
                     //use rating from localStorage if possible to reduce the number of calls to CORS Proxy/RMP
                     searchIfNeeded(splitName,nameTag,collegeName); 
-                    
+
                     }
 
                 }
@@ -51,4 +52,13 @@ function getProfNamesFromUMaine(){
             }
         }
     }
+
+    //remove all loading messages from the page
+var loadingMessages = document.getElementsByClassName("loading-msg");
+console.log(loadingMessages.length);
+
+while(loadingMessages.length > 0){
+    loadingMessages[0].remove(); 
+}
+
 }
