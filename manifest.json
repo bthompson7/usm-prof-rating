@@ -10,7 +10,7 @@
           {
               "matches":["https://*.umaine.edu/*"],
               "css":["src/css/extension.css"],
-              "js":["src/js/util/jsonToHTML.js","dist/util.js",
+              "js":["dist/jsonToHTML.js","dist/util.js",
                 "src/js/content_scripts/getDataFromRMP.js",
                 "src/js/content_scripts/UMaine.js"],
               "run_at": "document_end"
@@ -18,7 +18,7 @@
           {
               "matches":["https://usm.maine.edu/*"],
               "css":["src/css/extension.css"],
-              "js":["src/js/util/jsonToHTML.js","dist/util.js",
+              "js":["dist/jsonToHTML.js","dist/util.js",
                 "src/js/content_scripts/getDataFromRMP.js",
                 "src/js/content_scripts/USM.js"],
               "run_at": "document_end"
@@ -26,7 +26,7 @@
           {
               "matches":["https://mainestreetcs.maine.edu/*"],
               "css":["src/css/extension.css"],
-              "js":["src/js/util/jsonToHTML.js","dist/util.js",
+              "js":["dist/jsonToHTML.js","dist/util.js",
                 "src/js/content_scripts/getDataFromRMP.js",
                 "src/js/content_scripts/Mainestreet.js"],
               "run_at": "document_end"

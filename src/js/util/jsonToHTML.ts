@@ -4,11 +4,12 @@ Convert a json object into an html tag to display on the webpage
 
 */
 
-"use strict";
 
-function jsonToHTML(jsonObject){
+function jsonToHTML(jsonObject: any){
 
   
+    console.log("Converting JSON to html using TypeScript");
+    
     var ratingURL = "https://www.ratemyprofessors.com/ShowRatings.jsp?tid=";
     if(jsonObject['foundProf']){
       var avgProfRating = jsonObject['avgRating'];

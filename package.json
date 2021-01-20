@@ -1,0 +1,10 @@
+{
+  "name": "usm-prof-rating",
+  "version": "1.0.0",
+  "description": "usm-prof-rating",
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/chrome": "0.0.100"
+  }
+}
