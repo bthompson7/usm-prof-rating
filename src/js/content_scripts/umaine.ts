@@ -4,7 +4,6 @@ Gets a list of professor names from https://online.umaine.edu/course-search or a
 
 */
 
-"use strict";
 
 getProfNamesFromUMaine();
 
@@ -19,6 +18,7 @@ function getProfNamesFromUMaine(){
             
                 var numOfProfs = listOfNames[i].getElementsByTagName('a').length;
                
+            //a single professor teaches a class
             if(numOfProfs == 1){
                 for(var j = 0; j < numOfProfs; j++){
                     var professorName = listOfNames[i].getElementsByTagName('a')[j].innerHTML;
@@ -30,6 +30,10 @@ function getProfNamesFromUMaine(){
                     searchIfNeeded(splitName,nameTag,collegeName); 
 
                 }
+
+                    
+            //if we have more than 1 professor that teach a class
+            //loop through and find all a tags that arent the ones we inserted
             }else if(numOfProfs > 1){
                 for(var j = 0; j <= numOfProfs; j++){
                     var professorName = listOfNames[i].getElementsByTagName('a')[j].innerHTML;
@@ -52,13 +56,5 @@ function getProfNamesFromUMaine(){
             }
         }
     }
-
-    //remove all loading messages from the page
-var loadingMessages = document.getElementsByClassName("loading-msg");
-console.log(loadingMessages.length);
-
-while(loadingMessages.length > 0){
-    loadingMessages[0].remove(); 
-}
 
 }

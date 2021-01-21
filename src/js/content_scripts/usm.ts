@@ -17,6 +17,7 @@ for(var i =0; i < listOfNames.length; i++){
     try{
             var numOfProfs = listOfNames[i].getElementsByTagName('a').length;
             
+            //a single professor teaches a class
             if(numOfProfs == 1){
                 for(var j = 0; j < numOfProfs; j++){
                     var professorName = listOfNames[i].getElementsByTagName('a')[j].innerHTML;

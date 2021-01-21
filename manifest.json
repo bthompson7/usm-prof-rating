@@ -12,7 +12,7 @@
               "css":["src/css/extension.css"],
               "js":["dist/jsonToHTML.js","dist/util.js",
                 "src/js/content_scripts/getDataFromRMP.js",
-                "src/js/content_scripts/UMaine.js"],
+                "dist/umaine.js"],
               "run_at": "document_end"
           },
           {
