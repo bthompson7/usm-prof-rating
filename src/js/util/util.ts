@@ -113,8 +113,7 @@ Return the fullname based on the nickname given
 
 */
 
-function nickNameToFull(name: string){
-
+function nickNameToFull(name: string): string | undefined{
     return names.get(name);
 
 }
@@ -132,7 +131,7 @@ function roundNumber(num: number){
 }
 
 
-  function searchIfNeeded(splitName: string,tag: HTMLElement, collegeName: string){
+  function searchIfNeeded(splitName: string[],tag: HTMLElement | Element, collegeName: string){
 
 
     var rating = "";
