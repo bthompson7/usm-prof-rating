@@ -17,7 +17,7 @@ for(var i =0; i < listOfNames.length; i++){
     try{
             var numOfProfs = listOfNames[i].getElementsByTagName('a').length;
             
-            //a single professor teaches a class
+          //a single professor teaches a class
             if(numOfProfs == 1){
                 for(var j = 0; j < numOfProfs; j++){
                     var professorName = listOfNames[i].getElementsByTagName('a')[j].innerHTML;
@@ -65,9 +65,11 @@ for(var i =0; i < listOfNames.length; i++){
 function getSingleUSMProfName(profName: Element, collegeName: string){
      var splitName = profName.innerHTML.split(" ");
 
+      console.log(splitName[0] + " " +  splitName[1]);
+    
       var firstName = nickNameToFull(splitName[0]);
 
-      if(firstName !== null){
+      if(firstName !== undefined){
           splitName[0] = firstName!;
       }
 
@@ -75,7 +77,7 @@ function getSingleUSMProfName(profName: Element, collegeName: string){
       
       //use rating from localStorage if possible to reduce the number of calls to CORS Proxy/RMP
       var insertAfter = document.querySelector("#content-area > div > div > article > div.profile-name-title-container > div")!;
-      searchIfNeeded(splitName,insertAfter,collegeName);
+      searchIfNeeded(splitName, insertAfter,collegeName);
 
 
 }

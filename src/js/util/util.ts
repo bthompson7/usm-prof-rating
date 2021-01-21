@@ -54,7 +54,7 @@ Lookup a prfoessors department
 
 */
 
-function getProfDepartment(profName: string){
+function getProfDepartment(profName: string): string | undefined{
     return profDepartments.get(profName);
 
 }
@@ -113,7 +113,7 @@ Return the fullname based on the nickname given
 
 */
 
-function nickNameToFull(name: string): string | undefined{
+function nickNameToFull(name: string): string | undefined {
     return names.get(name);
 
 }
@@ -131,7 +131,7 @@ function roundNumber(num: number){
 }
 
 
-  function searchIfNeeded(splitName: string[],tag: HTMLElement, collegeName: string){
+  function searchIfNeeded(splitName: string[],tag: Element, collegeName: string){
 
 
     var rating = "";

@@ -6,7 +6,7 @@ Search for a professor using data from RateMyProfessor
 
 var fullURL = "https://intense-fjord-93634.herokuapp.com/https://search-production.ratemyprofessors.com/solr/rmp/select/?solrformat=true&rows=2&wt=json&q=";
 
-function searchForProfessor(firstName: string,lastName: string,university: string,nameTag: HTMLElement){
+function searchForProfessor(firstName: string,lastName: string,university: string,nameTag: Element){
 
 var findProfessorURL = `${fullURL} + ${firstName} + ${lastName} + ${university}`;
 const httpRequest = new XMLHttpRequest();
@@ -51,7 +51,7 @@ If we can't find the professor we try the last name
 then check the department to make sure it matches the current subject we are in
 
 */
-function searchUsingLastName(firstName: string,lastName: string,university: string,nameTag: HTMLElement){
+function searchUsingLastName(firstName: string,lastName: string,university: string,nameTag: Element){
 
 
   if(university === "Maine"){
