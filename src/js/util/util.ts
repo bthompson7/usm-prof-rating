@@ -131,7 +131,7 @@ function roundNumber(num: number){
 }
 
 
-  function searchIfNeeded(splitName: string[],tag: HTMLElement | Element, collegeName: string){
+  function searchIfNeeded(splitName: string[],tag: HTMLElement, collegeName: string){
 
 
     var rating = "";

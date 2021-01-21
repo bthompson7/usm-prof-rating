@@ -1,6 +1,4 @@
-"use strict";
-
-var collegeName = "Maine+University"
+var collegeName: string = "Maine+University"
 
 new MutationObserver(function(mutations) {
 
@@ -9,7 +7,7 @@ new MutationObserver(function(mutations) {
                     
                         //for some reason mainestreet is inside an iframe so we have to do this to get the iframe content
                         //credit: https://stackoverflow.com/questions/1088544/get-element-from-within-an-iframe
-                        var iframe = document.querySelector("#ptifrmtgtframe");
+                        var iframe: any = document.querySelector("#ptifrmtgtframe")!;
                         var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
 
                         var titleElement = innerDoc.querySelector("#DERIVED_REGFRM1_UM_TITLE1")

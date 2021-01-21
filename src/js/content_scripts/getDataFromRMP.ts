@@ -3,17 +3,16 @@
 Search for a professor using data from RateMyProfessor
 
 */
-"use strict";
 
 var fullURL = "https://intense-fjord-93634.herokuapp.com/https://search-production.ratemyprofessors.com/solr/rmp/select/?solrformat=true&rows=2&wt=json&q=";
 
-function searchForProfessor(firstName,lastName,university,nameTag){
+function searchForProfessor(firstName: string,lastName: string,university: string,nameTag: HTMLElement){
 
 var findProfessorURL = `${fullURL} + ${firstName} + ${lastName} + ${university}`;
 const httpRequest = new XMLHttpRequest();
 
 httpRequest.open("GET", findProfessorURL);
-httpRequest.onreadystatechange = (e) => {
+httpRequest.onreadystatechange = () => {
        if(httpRequest.status == 200 && httpRequest.readyState == 4){
          var ratingData = parseDataFromRMP(httpRequest.response);
 
@@ -32,8 +31,8 @@ httpRequest.onreadystatechange = (e) => {
 
                   //fetch data from RMP
                    console.log("Data is old, getting new data from the RMP.com api!")
-                   localStorage.removeItem(splitName[0] + " " + splitName[splitName.length - 1])
-                   searchForProfessor(splitName[0],splitName[splitName.length - 1],collegeName,tag);  
+                   localStorage.removeItem(firstName + " " + lastName)
+                   searchForProfessor(firstName,lastName,collegeName,nameTag);  
 
                  }
                 }
@@ -52,7 +51,7 @@ If we can't find the professor we try the last name
 then check the department to make sure it matches the current subject we are in
 
 */
-function searchUsingLastName(firstName,lastName,university,nameTag){
+function searchUsingLastName(firstName: string,lastName: string,university: string,nameTag: HTMLElement){
 
 
   if(university === "Maine"){
@@ -65,19 +64,18 @@ function searchUsingLastName(firstName,lastName,university,nameTag){
 
       if(window.location.href.includes('https://mainestreetcs.maine.edu/')){
 
-        var iframe = document.querySelector("#ptifrmtgtframe");
+        var iframe: any = document.querySelector("#ptifrmtgtframe");
         var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
-        var currentSubjectElement = innerDoc.querySelector("#win0divDERIVED_CLSRCH_SSR_CLSRCH_CRIT > div > table > tbody > tr > td > strong:nth-child(1)");
+        var currentSubjectElement: HTMLSelectElement = innerDoc.querySelector("#win0divDERIVED_CLSRCH_SSR_CLSRCH_CRIT > div > table > tbody > tr > td > strong:nth-child(1)");
         var department = currentSubjectElement.innerHTML;
 
       }else{
-        var currentSubjectElement = document.getElementById("edit-subject");
-        var currentSubject = currentSubjectElement.value;
-        var department = getCourse(currentSubject);
+        var inputValue = (<HTMLInputElement>document.getElementById("edit-subject")).value;
+        var department: string = getCourse(inputValue);
       }
       
     }catch(err){
-      var department = getProfDepartment(lastName);
+      var department = getProfDepartment(lastName)!;
     }
   }
 
@@ -87,14 +85,14 @@ function searchUsingLastName(firstName,lastName,university,nameTag){
   const httpRequest = new XMLHttpRequest();
   
   httpRequest.open("GET", lastNameURL);
-  httpRequest.onreadystatechange = (e) => {
+  httpRequest.onreadystatechange = () => {
          if(httpRequest.status == 200 && httpRequest.readyState == 4){
 
           //parse data to get the number of results found
           var data = JSON.parse(httpRequest.response);
 
           for(var i=0; i < data['response']['numFound']; i++){
-            var ratingData = parseDataFromRMP(httpRequest.response);
+            var ratingData: any = parseDataFromRMP(httpRequest.response);
 
             if(ratingData['foundProf'] && ratingData['department'] === department){
               var htmlToInsert = jsonToHTML(ratingData);
@@ -122,7 +120,7 @@ function searchUsingLastName(firstName,lastName,university,nameTag){
         httpRequest.send(); 
 }
 
-function parseDataFromRMP(jsonData){
+function parseDataFromRMP(jsonData: any){
   try{
     var data = JSON.parse(jsonData);
     var avgRating = roundNumber(data['response']['docs'][0]['averageratingscore_rf']);
